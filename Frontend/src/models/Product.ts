@@ -6,7 +6,6 @@ export class Product {
 		public providerPrice: number,
 		public salePrice: number,
 		public discount: number,
-		public active: boolean) {
-
-	}
+		public active: boolean
+	) {}
 }

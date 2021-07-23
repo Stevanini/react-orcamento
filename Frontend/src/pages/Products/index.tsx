@@ -1,15 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ProductsList } from '../../components';
+import React from "react";
+import { Link } from "react-router-dom";
+import { ProductsList } from "../../components";
 
-import './index.scss';
+import "./styles.scss";
 
 const Products = () => {
 	return (
 		<>
 			<ul className="uk-breadcrumb">
-				<li><Link to="/">Home</Link></li>
-				<li><span>Produtos</span></li>
+				<li>
+					<Link to="/">Home</Link>
+				</li>
+				<li>
+					<span>Produtos</span>
+				</li>
 			</ul>
 
 			<nav className="uk-navbar">
@@ -17,7 +21,8 @@ const Products = () => {
 					<ul className="uk-navbar-nav">
 						<li>
 							<Link to="/products/create">
-								<span uk-icon="icon: plus; ratio: 1.2"></span> Adicionar novo produto
+								<span uk-icon="icon: plus; ratio: 1.2"></span>{" "}
+								Adicionar novo produto
 							</Link>
 						</li>
 					</ul>
@@ -25,9 +30,8 @@ const Products = () => {
 			</nav>
 
 			<ProductsList />
-
 		</>
 	);
-}
+};
 
 export default Products;

@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import './index.scss';
+import "./styles.scss";
 
 const Navbar = () => {
 	return (
@@ -9,12 +9,17 @@ const Navbar = () => {
 			<div className="uk-container">
 				<nav className="uk-navbar">
 					<div className="uk-navbar-left">
-						<Link to="/" className="uk-navbar-item uk-text-decoration-none uk-logo ro-white">Gereciador de Orçamentos</Link>
+						<Link
+							to="/"
+							className="uk-navbar-item uk-text-decoration-none uk-logo ro-white"
+						>
+							Gereciador de Orçamentos
+						</Link>
 					</div>
 				</nav>
 			</div>
 		</div>
 	);
-}
+};
 
 export default Navbar;
