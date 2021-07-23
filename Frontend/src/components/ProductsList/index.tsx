@@ -1,21 +1,14 @@
-import React from "react";
-import { Product } from "../../models";
+import React, { useContext } from "react";
+
 import ProductListItem from "../ProductListItem";
 
-const ProductsList = () => {
-	const p: Product[] = [
-		{
-			id: 65,
-			description: "asd",
-			active: false,
-			title: "title",
-			discount: 65,
-			salePrice: 54,
-			providerPrice: 54,
-		},
-	];
-	const { products } = { products: p };
+import { ProductsContext, ProductContextType } from "../../contexts";
 
+const ProductsList = () => {
+	const { products } = useContext<ProductContextType>(ProductsContext);
+
+	console.log(products);
+	
 	return (
 		<table className="uk-table">
 			<caption>Lista de produtos</caption>
@@ -31,7 +24,7 @@ const ProductsList = () => {
 			<tbody>
 				{products?.map((product) => (
 					<ProductListItem
-						key={product.id}
+						key={product.id.toString()}
 						product={product}
 					></ProductListItem>
 				))}

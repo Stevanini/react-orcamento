@@ -1,6 +1,5 @@
-export class Product {
+export class ProductDTO {
 	constructor(
-		public id: string,
 		public title: string,
 		public description: string,
 		public providerPrice: number,

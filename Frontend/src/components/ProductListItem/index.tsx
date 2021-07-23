@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ProductContextType, ProductsContext } from "../../contexts";
 import { Product } from "../../models";
 
 interface ProductListItemProps {
@@ -6,12 +7,15 @@ interface ProductListItemProps {
 }
 
 const ProductListItem = (props: ProductListItemProps) => {
-	const onRemove = (product: Product) => {
-		console.log(product);
+
+	const { removeProduct, editProduct } = useContext<ProductContextType>(ProductsContext);
+
+	const onRemove = (productId: string) => {
+		removeProduct(productId);
 	};
 
 	const onEdit = (product: Product) => {
-		console.log(product);
+		editProduct(product);
 	};
 
 	return (
@@ -32,7 +36,7 @@ const ProductListItem = (props: ProductListItemProps) => {
 					<button
 						className="uk-icon-button uk-button-danger"
 						uk-icon="trash"
-						onClick={() => onRemove(props.product)}
+						onClick={() => onRemove(props.product.id)}
 					></button>
 				</div>
 			</td>

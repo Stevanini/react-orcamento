@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Budgets = () => {
+const Budgets: React.FC = () => {
 	return (
 		<>
 			<ul className="uk-breadcrumb">

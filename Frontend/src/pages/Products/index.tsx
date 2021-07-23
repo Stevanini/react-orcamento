@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ProductsList } from "../../components";
 
-const Products = () => {
+const Products: React.FC = () => {
 	return (
 		<>
 			<ul className="uk-breadcrumb">
