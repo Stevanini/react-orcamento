@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ProductsList } from "../../components";
 
-import "./styles.scss";
-
 const Products = () => {
 	return (
 		<>
