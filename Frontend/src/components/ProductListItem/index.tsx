@@ -20,9 +20,9 @@ const ProductListItem = (props: ProductListItemProps) => {
 
 	return (
 		<tr className="uk-animation-slide-bottom-medium">
-			<td className="uk-width-expand">{props.product.title}</td>
+			<td className="uk-width-auto">{props.product.title}</td>
 			<td className="uk-width-auto">{props.product.description}</td>
-			<td className="uk-width-auto">{props.product.salePrice}</td>
+			<td className="uk-width-auto">R$ {props.product.salePrice.toLocaleString('pt-BR', { minimumFractionDigits: 2})}</td>
 			<td className="uk-width-auto uk-column-1-2">
 				<div>
 					<button

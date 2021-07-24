@@ -7,8 +7,6 @@ import { ProductsContext, ProductContextType } from "../../contexts";
 const ProductsList = () => {
 	const { products } = useContext<ProductContextType>(ProductsContext);
 
-	console.log(products);
-	
 	return (
 		<table className="uk-table">
 			<caption>Lista de produtos</caption>
