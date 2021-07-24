@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ProductContextType, ProductsContext } from "../../contexts";
-import { Guid, Product } from "../../models";
+import { Product, ProductDTO } from "../../models";
 
 const schema = yup.object().shape({
 	title: yup.string().min(5).max(30).required("Título inválido"),
@@ -22,18 +22,40 @@ interface AddProductForm {
 	discount: number;
 }
 
-const AddProduct: React.FC = () => {
+interface AddProductParams {
+	productId: string;
+}
 
-	const { addProduct } = useContext<ProductContextType>(ProductsContext);
+const CreateProduct: React.FC = () => {
 
-	const { register, handleSubmit, formState: { errors } } = useForm({
+	let { productId } = useParams<AddProductParams>();
+	console.log(productId);
+
+	const { products, addProduct, editProduct } = useContext<ProductContextType>(ProductsContext);
+
+	const [product, setProduct] = useState<Product>({} as Product);
+
+	const { register, handleSubmit, formState: { errors }, setValue } = useForm({
 		resolver: yupResolver(schema)
 	});
 
+	useEffect(() => {
+		const productBase = products.find(p => p.id === productId);
+
+		setValue('title', productBase?.title);
+		setValue('description', productBase?.description);
+		setValue('salePrice', productBase?.salePrice);
+		setValue('providerPrice', productBase?.providerPrice);
+		setValue('discount', productBase?.discount);
+
+		setProduct(productBase || {} as Product);
+	}, [productId, products, setValue]);
+
+
 	const onSubmit = (data: AddProductForm, e: any) => {
 
-		const product: Product = {
-			id: Guid.newGuid(),
+		console.log(data);
+		const newPproduct: ProductDTO = {
 			title: data.title,
 			description: data.description,
 			salePrice: data.salePrice,
@@ -42,7 +64,12 @@ const AddProduct: React.FC = () => {
 			active: true,
 		}
 
-		addProduct(product);
+		if (productId) {
+			editProduct(productId, newPproduct);
+		} else {
+			addProduct(newPproduct);
+		}
+
 		e.target.reset();
 		window.location.href = "/products";
 	}
@@ -57,7 +84,7 @@ const AddProduct: React.FC = () => {
 					<Link to="/products">Produtos</Link>
 				</li>
 				<li>
-					<span>Criar produto</span>
+					<span>{productId ? "Editar" : "Criar"} produto</span>
 				</li>
 			</ul>
 
@@ -72,6 +99,11 @@ const AddProduct: React.FC = () => {
 						placeholder="Titulo do produto"
 						className="uk-input"
 						{...register('title')}
+						value={product.title || ''}
+						onChange={e => {
+							register('title')
+							setProduct(Object.assign({}, product, { title: e.target.value }))
+						}}
 					/>
 					{errors.title && errors.title.type === "required" &&
 						<span><small><strong className="uk-text-danger">O título é obrigatório.</strong></small></span>}
@@ -87,6 +119,11 @@ const AddProduct: React.FC = () => {
 						placeholder="Breve descrição do produto"
 						className="uk-input"
 						{...register('description')}
+						value={product.description || ''}
+						onChange={e => {
+							register('description');
+							setProduct(Object.assign({}, product, { description: e.target.value }));
+						}}
 					/>
 					{errors.description && errors.description.type === "required" &&
 						<span><small><strong className="uk-text-danger">A descrição é obrigatório.</strong></small></span>}
@@ -106,6 +143,11 @@ const AddProduct: React.FC = () => {
 							className="uk-input"
 							step="0.01"
 							{...register('providerPrice')}
+							value={product.providerPrice || 0}
+							onChange={e => {
+								register('providerPrice');
+								setProduct(Object.assign({}, product, { providerPrice: e.target.value }))
+							}}
 						/>
 						{errors.providerPrice && (errors.providerPrice.type === "required" || errors.providerPrice.type === "typeError") &&
 							<span><small><strong className="uk-text-danger">O preço é obrigatório.</strong></small></span>}
@@ -122,6 +164,11 @@ const AddProduct: React.FC = () => {
 							className="uk-input"
 							step="0.01"
 							{...register('salePrice')}
+							value={product.salePrice || 0}
+							onChange={e => {
+								register('salePrice');
+								setProduct(Object.assign({}, product, { salePrice: e.target.value }))
+							}}
 						/>
 						{errors.salePrice && (errors.salePrice.type === "required" || errors.salePrice.type === "typeError") &&
 							<span><small><strong className="uk-text-danger">O preço é obrigatório.</strong></small></span>}
@@ -132,11 +179,11 @@ const AddProduct: React.FC = () => {
 				</div>
 
 				<div className="uk-width-1-1">
-					<button type="submit" className="uk-button uk-button-primary">Salvar</button>
+					<button type="submit" className="uk-button uk-button-primary">{productId ? "Editar" : "Salvar"}</button>
 				</div>
 			</form>
 		</>
 	);
 };
 
-export default AddProduct;
+export default CreateProduct;

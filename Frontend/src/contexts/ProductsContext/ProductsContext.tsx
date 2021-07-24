@@ -20,15 +20,15 @@ const ProductsProvider = (props: any) => {
 	}, [products])
 
 	const addProduct = (dto: ProductDTO) => {
-		const product: Product = {
-			id: Guid.newGuid(),
-			active: true,
-			title: dto.title,
-			description: dto.description,
-			discount: dto.discount,
-			salePrice: dto.salePrice,
-			providerPrice: dto.providerPrice
-		}
+		const product: Product = new Product(
+			Guid.newGuid(),
+			dto.title,
+			dto.description,
+			dto.providerPrice,
+			dto.salePrice,
+			dto.discount,
+			true
+		);
 
 		setProducts([...products, product]);
 	}
@@ -38,9 +38,9 @@ const ProductsProvider = (props: any) => {
 		setProducts(result);
 	}
 
-	const editProduct = (dto: Product) => {
+	const editProduct = (productId: string, dto: ProductDTO) => {
 
-		const idxProduct = products.findIndex(p => p.id !== dto.id);
+		const idxProduct = products.findIndex(p => p.id === productId);
 
 		if (idxProduct !== -1) {
 

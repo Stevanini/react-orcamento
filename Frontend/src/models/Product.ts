@@ -1,4 +1,8 @@
-export class Product {
+import { ProductDTO } from './DTOs/ProductDTO';
+interface IProduct {
+	toDTO: () => ProductDTO;
+}
+export class Product implements IProduct {
 	constructor(
 		public id: string,
 		public title: string,
@@ -8,4 +12,16 @@ export class Product {
 		public discount: number,
 		public active: boolean
 	) { }
+
+	toDTO() {
+		return {
+			title: this.title,
+			description: this.description,
+			providerPrice: this.providerPrice,
+			salePrice: this.salePrice,
+			discount: this.discount,
+			active: this.active
+		} as ProductDTO
+	}
+
 }

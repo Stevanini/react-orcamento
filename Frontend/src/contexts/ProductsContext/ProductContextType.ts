@@ -4,5 +4,5 @@ export interface ProductContextType {
 	products: Product[];
 	addProduct: (product: ProductDTO) => void;
 	removeProduct: (productId: string) => void;
-	editProduct: (product: Product) => void;
+	editProduct: (productId: string, product: ProductDTO) => void;
 }
