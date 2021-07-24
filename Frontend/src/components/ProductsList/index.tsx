@@ -14,7 +14,6 @@ const ProductsList = () => {
 			<caption>Lista de produtos</caption>
 			<thead>
 				<tr>
-					<th>#</th>
 					<th>Nome</th>
 					<th>Descrição</th>
 					<th>Preço</th>

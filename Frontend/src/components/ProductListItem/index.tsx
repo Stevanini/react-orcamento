@@ -20,8 +20,7 @@ const ProductListItem = (props: ProductListItemProps) => {
 
 	return (
 		<tr className="uk-animation-slide-bottom-medium">
-			<td className="uk-width-auto">{props.product.id}</td>
-			<td className="uk-width-auto">{props.product.title}</td>
+			<td className="uk-width-expand">{props.product.title}</td>
 			<td className="uk-width-auto">{props.product.description}</td>
 			<td className="uk-width-auto">{props.product.salePrice}</td>
 			<td className="uk-width-auto uk-column-1-2">
