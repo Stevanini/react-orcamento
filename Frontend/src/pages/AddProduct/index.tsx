@@ -8,8 +8,8 @@ import { ProductContextType, ProductsContext } from "../../contexts";
 import { Guid, Product } from "../../models";
 
 const schema = yup.object().shape({
-	title: yup.string().max(30).required("Título inválido"),
-	description: yup.string().max(30).required("Descrição inválido"),
+	title: yup.string().min(5).max(30).required("Título inválido"),
+	description: yup.string().min(5).max(80).required("Descrição inválido"),
 	salePrice: yup.number().min(0).required("Preço inválido"),
 	providerPrice: yup.number().min(0).required("Preço inválido"),
 });
@@ -75,8 +75,8 @@ const AddProduct: React.FC = () => {
 					/>
 					{errors.title && errors.title.type === "required" &&
 						<span><small><strong className="uk-text-danger">O título é obrigatório.</strong></small></span>}
-					{errors.title && errors.title.type === "max" &&
-						<span><small><strong className="uk-text-danger">O título deve ter no máximo 30 caracteres</strong></small></span>}
+					{errors.title && (errors.title.type === "min" || errors.title.type === "max") &&
+						<span><small><strong className="uk-text-danger">O título deve ter entre 5 e 30 caracteres</strong></small></span>}
 				</div>
 
 				<label className="uk-margin uk-form-label">Descrição do produto</label>
@@ -90,8 +90,8 @@ const AddProduct: React.FC = () => {
 					/>
 					{errors.description && errors.description.type === "required" &&
 						<span><small><strong className="uk-text-danger">A descrição é obrigatório.</strong></small></span>}
-					{errors.description && errors.description.type === "max" &&
-						<span><small><strong className="uk-text-danger">A descrição deve ter no máximo 30 caracteres</strong></small></span>}
+					{errors.description && (errors.description.type === "min" || errors.description.type === "max") &&
+						<span><small><strong className="uk-text-danger">A descrição deve ter entre 5 e 80 caracteres</strong></small></span>}
 				</div>
 
 
