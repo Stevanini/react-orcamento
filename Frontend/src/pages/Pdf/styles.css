@@ -1,0 +1,208 @@
+#body-pdf {
+	padding: 0px;
+	font-family: "DejaVu Sans", sans-serif;
+	font-size: 12px;
+}
+
+@font-face {
+    font-family: "DejaVu Sans";
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans.ttf") format("truetype");
+}
+
+.mt-30{
+	margin-top: 30px !important;
+}
+.pdt-30{
+	padding-top: 30px;
+}
+.pdb-30{
+	padding-bottom: 30px;
+}
+
+.p-right{
+	text-align: right !important;
+}
+
+.p-center{
+	text-align: center !important;
+}
+
+.w-100px{
+	width: 100px !important;
+}
+
+.t0 {
+	width: 100%;
+	border-collapse: collapse
+}
+
+.t0 td {
+	font-size: 12px;
+	overflow: hidden;
+	padding: 5px;
+	word-break: normal;
+}
+
+.t0 th {
+	font-size: 12px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.t0 .t0-col {
+	text-align: left;
+	vertical-align: top
+}
+
+.t0 .t0-br {
+	text-align: right;
+	text-align: -webkit-right;
+	vertical-align: bottom
+}
+
+.p0 {
+	text-align: left;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font: bold 22px 'Arial';
+	color: #555555;
+	line-height: 16px;
+}
+
+.p1 {
+	text-align: left;
+	margin-top: 10px;
+	margin-bottom: 0px;
+	font: 12px 'Arial';
+	color: #555555;
+	line-height: 9px;
+}
+
+.p3 {
+	text-align: left;
+	font: bold 12px 'Arial';
+	color: #222222;
+	line-height: 9px;
+}
+
+.p8 {
+	text-align: right;
+	font: bold 40px 'Arial';
+	color: #555555;
+}
+
+.p9 {
+	text-align: left;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	white-space: nowrap;
+}
+
+.ft6 {
+	font: bold 12px 'Arial';
+	color: #555555;
+	line-height: 9px;
+}
+
+.ft1 {
+	font: 12px 'Arial';
+	color: #555555;
+	line-height: 9px;
+}
+
+.td0 {
+	padding: 0px;
+	margin: 0px;
+	width: 100px;
+	vertical-align: bottom;
+}
+
+.td1 {
+	width: 80px;
+	vertical-align: bottom;
+}
+
+.t2 {
+	width: 100%;
+	margin-top: 60px;
+	border-collapse: collapse;
+}
+
+.t2 thead {
+	background-color: #555;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.t2 td {
+	font-size: 12px;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+	border-bottom: 1px solid #ddd;
+}
+
+.t2 th {
+	font-size: 12px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px 5px;
+	word-break: normal;
+}
+
+.t2 .t2-header {
+	text-align: left;
+	vertical-align: top;
+}
+
+.t2 .t2-col {
+	text-align: left;
+	vertical-align: top;
+}
+
+.t3-container{
+	margin-top: 30px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.t3 {
+	border-collapse: collapse;
+	width: 40%;
+}
+
+.t3 td {
+	font-size: 12px;
+	overflow: hidden;
+	padding: 10px;
+	word-break: normal;
+}
+
+.t3 th {
+	font-size: 12px;
+	font-weight: normal;
+	overflow: hidden;
+	padding: 10px;
+	word-break: normal;
+}
+
+.t3 .t3-header {
+	border-color: inherit;
+	text-align: left;
+	vertical-align: top
+}
+
+.t3 .t3-col {
+	text-align: left;
+	vertical-align: top
+}
+
+.t3 .t3-footer{
+	background-color: #ccc;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 16px;
+}
