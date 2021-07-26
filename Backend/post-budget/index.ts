@@ -8,32 +8,19 @@ const SMTP_PASS = "Stevanini-001";
 
 const FROM = "naoresponda@zezinho.com";
 
-const transporter = nodemailer.createTransport({
-	host: SMTP_HOST,
-	port: SMTP_PORT,
-	secure: true,
-	auth: {
-		user: SMTP_USER,
-		pass: SMTP_PASS
-	}
-});
-
-function dataURLtoFile(dataURL: string, filename: string) {
-	const arr = dataURL.split(',');
-	const matc = arr[0].match(/:(.*?);/);
-	const mime = matc ? matc[1] : '';
-	const bstr = atob(arr[1]);
-	var n = bstr.length;
-	const u8arr = new Uint8Array(n);
-	while (n--) {
-		u8arr[n] = bstr.charCodeAt(n);
-	}
-	return new File([u8arr], filename, { type: mime[1] });
-}
-
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
 	const body = req.body
 	const email = body.email;
+
+	const transporter = nodemailer.createTransport({
+		host: SMTP_HOST,
+		port: SMTP_PORT,
+		secure: true,
+		auth: {
+			user: SMTP_USER,
+			pass: SMTP_PASS
+		}
+	});
 
 	let info = await transporter.sendMail({
 		from: FROM,
