@@ -1912,6 +1912,11 @@
   dependencies:
     source-map "^0.6.1"
 
+"@types/uikit@^3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@types/uikit/-/uikit-3.3.2.tgz#8a1d279a46e4dd0c9dd74c5fd11a591f4f9eb223"
+  integrity sha512-Sa2d+Ari4S0IP7X3+Y+zhwu9nlhv07Jr3XQgeFVkvME3mGZQr8iTkifHCU3Jz4Z7c8/SQ8Ve0OFb0UAovnzb4Q==
+
 "@types/webpack-sources@*":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-2.1.0.tgz#8882b0bd62d1e0ce62f183d0d01b72e6e82e8c10"
@@ -11422,6 +11427,11 @@ typescript@^4.1.2:
   version "4.3.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.3.5.tgz#4d1c37cc16e893973c45a06886b7113234f119f4"
   integrity sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==
+
+uikit@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.7.1.tgz#981fe63c47ba14484f76050b5369eaf14d8d43f2"
+  integrity sha512-obWmwtKY6wnvPqwAgvGmn71PpNM4wMNVzfZDTK6/fO2+NyV/+kVnAOBVgIMcC1XPRBApoFej/Q1heU3wA9lPmg==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
