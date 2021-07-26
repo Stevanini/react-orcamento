@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { BudgetsList } from "../../components";
 
 const Budgets: React.FC = () => {
 	return (
@@ -12,7 +13,21 @@ const Budgets: React.FC = () => {
 					<span>Orçamentos</span>
 				</li>
 			</ul>
-			<p>Budgets</p>
+
+			<nav className="uk-navbar">
+				<div className="uk-navbar-right">
+					<ul className="uk-navbar-nav">
+						<li>
+							<Link to="/budgets/create">
+								<span uk-icon="icon: plus; ratio: 1.2"></span>{" "}
+								Adicionar novo orçamento
+							</Link>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<BudgetsList />
 		</>
 	);
 };

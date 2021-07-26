@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 import { PDFExport } from "@progress/kendo-react-pdf";
 
@@ -7,18 +7,33 @@ import { PDFExport } from "@progress/kendo-react-pdf";
 import './styles.css'
 import { PdfUtils } from "../../Utils";
 import { Budget, Email } from "../../models";
+import { BudgetContextType, BudgetsContext } from "../../contexts";
 
 const COMPANY_NAME = "Stevanini Inc.";
 const COMPANY_ADDRESS = "Rua Honório Lacerda Filho, 132";
 const COMPANY_CITY = "Leopoldina-MG";
-const COMPANY_EMAIL = "nao-responda@example.com";
+const COMPANY_EMAIL = "nao-responda@stevanini.com.br";
 
-interface IPdfProps {
-	budget: Budget
+interface AddBudgetParams {
+	budgetId: string;
 }
 
 
-const Pdf = ({ budget }: IPdfProps) => {
+const Pdf = () => {
+	console.log("pdf");
+
+	let { budgetId } = useParams<AddBudgetParams>();
+
+	const { budgets } = useContext<BudgetContextType>(BudgetsContext);
+
+	console.log(budgetId, budgets);
+	const [budget, setBudget] = useState<Budget>({} as Budget);
+
+	useEffect(() => {
+		const lsBudget = budgets.find(p => p.id === budgetId) || {} as Budget;
+		setBudget(lsBudget);
+	}, [budgetId, budgets]);
+
 	const container = useRef<HTMLDivElement>(null);
 	const pdfExportComponent = useRef<PDFExport>(null);
 
@@ -68,6 +83,7 @@ const Pdf = ({ budget }: IPdfProps) => {
 									<tr>
 										<th className="t0-col">
 											<p className="p0">{COMPANY_NAME}</p>
+											<p className="p1">{COMPANY_EMAIL}</p>
 											<p className="p1">{COMPANY_ADDRESS}</p>
 											<p className="p1">{COMPANY_CITY}</p>
 										</th>
@@ -80,9 +96,10 @@ const Pdf = ({ budget }: IPdfProps) => {
 									<tr>
 										<td className="t0-col">
 											<p className="p3 ft2 mt-30">Para o cliente:</p>
-											<p className="p1">{budget?.client.name}</p>
-											<p className="p1">{budget?.client.address}</p>
-											<p className="p1">{budget?.client.city}</p>
+											<p className="p1">{budget?.client?.name}</p>
+											<p className="p1">{budget?.client?.email}</p>
+											<p className="p1">{budget?.client?.address}</p>
+											<p className="p1">{budget?.client?.city}</p>
 										</td>
 										<td className="t0-br">
 											<table className="t1">
@@ -91,7 +108,7 @@ const Pdf = ({ budget }: IPdfProps) => {
 														<p className="p9 ft6">Data do Orçamento</p>
 													</td>
 													<td className="tr1 td1">
-														<p className="p9 ft1 p-right">{budget?.date.toLocaleDateString("pt-BR")}</p>
+														{/* <p className="p9 ft1 p-right">{budget?.startDate && budget?.startDate.toLocaleDateString("pt-BR")}</p> */}
 													</td>
 												</tr>
 												<tr>
@@ -99,7 +116,7 @@ const Pdf = ({ budget }: IPdfProps) => {
 														<p className="p9 ft6">Válido até</p>
 													</td>
 													<td className="tr2 td1">
-														<p className="p9 ft1 p-right">{budget?.dateValid.toLocaleDateString("pt-BR")}</p>
+														{/* <p className="p9 ft1 p-right">{budget?.endDate && budget.endDate.toLocaleDateString("pt-BR")}</p> */}
 													</td>
 												</tr>
 											</table>
@@ -139,7 +156,7 @@ const Pdf = ({ budget }: IPdfProps) => {
 												<p className="p9 ft6">Subtotal</p>
 											</th>
 											<th className="t3-header ">
-												<p className="p9 ft1 p-right">R$ {budget?.calculateSubTotal()}</p>
+												{/* <p className="p9 ft1 p-right">R$ {budget.calculateSubTotal()}</p> */}
 											</th>
 										</tr>
 									</thead>
@@ -157,7 +174,7 @@ const Pdf = ({ budget }: IPdfProps) => {
 												<p className="p9 ft6">TOTAL</p>
 											</td>
 											<td className="t3-col">
-												<p className="p9 ft1 p-right">RS {budget?.calculateTotal()}</p>
+												{/* <p className="p9 ft1 p-right">RS {budget.calculateTotal()}</p> */}
 											</td>
 										</tr>
 									</tbody>

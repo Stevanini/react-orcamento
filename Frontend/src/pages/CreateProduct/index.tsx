@@ -89,7 +89,7 @@ const CreateProduct: React.FC = () => {
 			</ul>
 
 			<form onSubmit={handleSubmit<AddProductForm>(onSubmit)} className="uk-form-stacked">
-				<h4>Novo produto</h4>
+				<h4>{productId ? "Editar" : "Criar"} produto</h4>
 
 				<label className="uk-margin uk-form-label">Título do produto</label>
 				<div className="uk-form-controls">

@@ -2,19 +2,21 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import { Navbar } from "./components";
-import { ProductsProvider } from "./contexts";
+import { BudgetsProvider, ProductsProvider } from "./contexts";
 import Routes from "./routes";
 
 function App() {
 	return (
 		<Router>
-			<ProductsProvider>
-				<Navbar />
-				<br />
-				<div className="uk-container">
-					<Routes />
-				</div>
-			</ProductsProvider>
+			<BudgetsProvider>
+				<ProductsProvider>
+					<Navbar />
+					<br />
+					<div className="uk-container">
+						<Routes />
+					</div>
+				</ProductsProvider>
+			</BudgetsProvider>
 		</Router>
 	);
 }

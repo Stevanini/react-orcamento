@@ -18,12 +18,6 @@ const Products: React.FC = () => {
 				<div className="uk-navbar-right">
 					<ul className="uk-navbar-nav">
 						<li>
-							<Link to="/pdf">
-								<span uk-icon="icon: file-pdf; ratio: 1.2"></span>{" "}
-								Gerar PDF
-							</Link>
-						</li>
-						<li>
 							<Link to="/products/create">
 								<span uk-icon="icon: plus; ratio: 1.2"></span>{" "}
 								Adicionar novo produto

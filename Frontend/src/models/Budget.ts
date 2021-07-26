@@ -4,8 +4,8 @@ import { ProductBudget } from './ProductBudget';
 export class Budget {
 	constructor(
 		public id: string,
-		public date: Date,
-		public dateValid: Date,
+		public startDate: Date,
+		public endDate: Date,
 		public client: Client,
 		public products: ProductBudget[],
 		public notes: string,
