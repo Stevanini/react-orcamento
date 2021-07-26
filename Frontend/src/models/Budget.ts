@@ -1,10 +1,9 @@
 import { Client } from "./Client";
-import { Guid } from "./Guid";
 import { ProductBudget } from './ProductBudget';
 
 export class Budget {
 	constructor(
-		public id: Guid,
+		public id: string,
 		public date: Date,
 		public dateValid: Date,
 		public client: Client,

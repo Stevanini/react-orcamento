@@ -1,5 +1,6 @@
+import { Guid } from 'guid-ts';
 import React, { createContext, useEffect, useState } from 'react'
-import { Guid, Product, ProductDTO } from '../../models';
+import { Product, ProductDTO } from '../../models';
 import { getProducts, saveProducts } from '../../services/ProductsService';
 import { ProductContextType } from './ProductContextType';
 
@@ -21,7 +22,7 @@ const ProductsProvider = (props: any) => {
 
 	const addProduct = (dto: ProductDTO) => {
 		const product: Product = new Product(
-			Guid.newGuid(),
+			Guid.newGuid().toString(),
 			dto.title,
 			dto.description,
 			dto.providerPrice,
