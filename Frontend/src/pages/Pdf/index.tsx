@@ -8,6 +8,7 @@ import './styles.css'
 import { PdfUtils } from "../../Utils";
 import { Budget, Email } from "../../models";
 import { BudgetContextType, BudgetsContext } from "../../contexts";
+import { Config } from "../../configs";
 
 const COMPANY_NAME = "Stevanini Inc.";
 const COMPANY_ADDRESS = "Rua Honório Lacerda Filho, 132";
@@ -61,7 +62,7 @@ const Pdf = () => {
 		<>
 			<ul className="uk-breadcrumb">
 				<li>
-					<Link to="/">Home</Link>
+					<Link to={`${Config.BASE_URL}/`}>Home</Link>
 				</li>
 				<li>
 					<span>Visualizar pdf</span>

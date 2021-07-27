@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BudgetsList } from "../../components";
+import { Config } from "../../configs";
 
 const Budgets: React.FC = () => {
 	return (
 		<>
 			<ul className="uk-breadcrumb">
 				<li>
-					<Link to="/">Home</Link>
+					<Link to={`${Config.BASE_URL}/`}>Home</Link>
 				</li>
 				<li>
 					<span>Orçamentos</span>
@@ -18,7 +19,7 @@ const Budgets: React.FC = () => {
 				<div className="uk-navbar-right">
 					<ul className="uk-navbar-nav">
 						<li>
-							<Link to="/budgets/create">
+							<Link to={`${Config.BASE_URL}/budgets/create`}>
 								<span uk-icon="icon: plus; ratio: 1.2"></span>{" "}
 								Adicionar novo orçamento
 							</Link>

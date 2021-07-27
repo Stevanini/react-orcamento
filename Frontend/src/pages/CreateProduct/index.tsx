@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ProductContextType, ProductsContext } from "../../contexts";
 import { Product, ProductDTO } from "../../models";
+import { Config } from "../../configs";
 
 const schema = yup.object().shape({
 	title: yup.string().min(5).max(30).required("Título inválido"),
@@ -27,6 +28,7 @@ interface AddProductParams {
 }
 
 const CreateProduct: React.FC = () => {
+	const history = useHistory();
 
 	let { productId } = useParams<AddProductParams>();
 	console.log(productId);
@@ -71,17 +73,17 @@ const CreateProduct: React.FC = () => {
 		}
 
 		e.target.reset();
-		window.location.href = "/products";
+		history.push(`${Config.BASE_URL}/products`);
 	}
 
 	return (
 		<>
 			<ul className="uk-breadcrumb">
 				<li>
-					<Link to="/">Home</Link>
+					<Link to={`${Config.BASE_URL}/`}>Home</Link>
 				</li>
 				<li>
-					<Link to="/products">Produtos</Link>
+					<Link to={`${Config.BASE_URL}/products`}>Produtos</Link>
 				</li>
 				<li>
 					<span>{productId ? "Editar" : "Criar"} produto</span>

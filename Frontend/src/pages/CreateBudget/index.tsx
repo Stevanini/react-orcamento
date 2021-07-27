@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
+import { Config } from "../../configs";
 
 interface AddBudgetParams {
 	budgetId: string;
@@ -14,10 +15,10 @@ const CreateBudget = () => {
 		<>
 			<ul className="uk-breadcrumb">
 				<li>
-					<Link to="/">Home</Link>
+					<Link to={`${Config.BASE_URL}/`}>Home</Link>
 				</li>
 				<li>
-					<Link to="/budgets">Orçamentos</Link>
+					<Link to={`${Config.BASE_URL}/budgets`}>Orçamentos</Link>
 				</li>
 				<li>
 					<span>{budgetId ? "Editar" : "Criar"} orçamento</span>

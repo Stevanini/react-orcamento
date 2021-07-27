@@ -1,5 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Router } from "react-router-dom";
+
+import history from "./routes/history";
 
 import { Navbar } from "./components";
 import { BudgetsProvider, ProductsProvider } from "./contexts";
@@ -7,7 +9,7 @@ import Routes from "./routes";
 
 function App() {
 	return (
-		<Router>
+		<Router history={history}>
 			<BudgetsProvider>
 				<ProductsProvider>
 					<Navbar />

@@ -1,4 +1,7 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { Config } from "../../configs";
+
 import { ProductContextType, ProductsContext } from "../../contexts";
 import { Product } from "../../models";
 
@@ -8,6 +11,8 @@ interface ProductListItemProps {
 
 const ProductListItem = (props: ProductListItemProps) => {
 
+	const history = useHistory();
+
 	const { removeProduct } = useContext<ProductContextType>(ProductsContext);
 
 	const onRemove = (productId: string) => {
@@ -15,7 +20,7 @@ const ProductListItem = (props: ProductListItemProps) => {
 	};
 
 	const onEdit = (productId: string) => {
-		window.location.href = "/products/create/" + productId;
+		history.push(`${Config.BASE_URL}/products/create/${productId}`);
 	};
 
 	return (

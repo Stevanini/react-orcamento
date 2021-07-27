@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { Config } from "../../configs";
 
 import { BudgetContextType, BudgetsContext } from "../../contexts";
 import { Budget } from "../../models";
@@ -9,6 +11,8 @@ interface BudgetListItemProps {
 
 const BudgetListItem = (props: BudgetListItemProps) => {
 
+	const history = useHistory();
+
 	const { removeBudget } = useContext<BudgetContextType>(BudgetsContext);
 
 	const onRemove = (budgetId: string) => {
@@ -16,11 +20,11 @@ const BudgetListItem = (props: BudgetListItemProps) => {
 	};
 
 	const onEdit = (budgetId: string) => {
-		window.location.href = "/budgets/create/" + budgetId;
+		history.push(`${Config.BASE_URL}/budgets/create/${budgetId}`);
 	};
 
 	const onViewPdf = (budgetId: string) => {
-		window.location.href = "/budgets/pdf/" + budgetId;
+		history.push(`${Config.BASE_URL}/budgets/pdf/${budgetId}`);
 	};
 
 	return (
