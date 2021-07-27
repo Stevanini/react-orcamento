@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-orcamento/static/css/main.735e3591.chunk.css",
-    "main.js": "/react-orcamento/static/js/main.2bfd621f.chunk.js",
-    "main.js.map": "/react-orcamento/static/js/main.2bfd621f.chunk.js.map",
+    "main.js": "/react-orcamento/static/js/main.4e01be55.chunk.js",
+    "main.js.map": "/react-orcamento/static/js/main.4e01be55.chunk.js.map",
     "runtime-main.js": "/react-orcamento/static/js/runtime-main.522e0b94.js",
     "runtime-main.js.map": "/react-orcamento/static/js/runtime-main.522e0b94.js.map",
     "static/js/2.b32958c4.chunk.js": "/react-orcamento/static/js/2.b32958c4.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.522e0b94.js",
     "static/js/2.b32958c4.chunk.js",
     "static/css/main.735e3591.chunk.css",
-    "static/js/main.2bfd621f.chunk.js"
+    "static/js/main.4e01be55.chunk.js"
   ]
 }
