@@ -2,25 +2,37 @@ import React, { createContext, useEffect, useState } from 'react'
 import { Guid } from 'guid-ts';
 
 import { BudgetContextType } from './BudgetContextType';
-import { Budget, BudgetDTO, Client } from '../../models';
+import { Budget, BudgetDTO, Client, ClientDTO } from '../../models';
 import { getBudgets, saveBudgets } from '../../services/BudgetsService';
+import { getClients } from '../../services/ClientService';
 
 export const BudgetsContext = createContext<BudgetContextType>({
 	budgets: [],
 	addBudget: () => null,
 	removeBudget: () => null,
-	editBudget: () => null
+	editBudget: () => null,
+
+	clients: [],
+	addClient: () => null,
+	removeClient: () => null,
+	editClient: () => null,
 });
 
 
 const BudgetsProvider = (props: any) => {
-	
+
 	const [budgets, setBudgets] = useState<Budget[]>(getBudgets);
+	const [clients, setClients] = useState<Client[]>(getClients);
+
+	useEffect(() => {
+		setClients(clients);
+	}, [clients])
 
 	useEffect(() => {
 		saveBudgets(budgets);
 	}, [budgets])
 
+	//#region Budget
 	const addBudget = (dto: BudgetDTO) => {
 		const budget: Budget = new Budget(
 			Guid.newGuid().toString(),
@@ -59,12 +71,53 @@ const BudgetsProvider = (props: any) => {
 		}
 
 	}
+	//#endregion
+
+	//#region Clients
+	const addClient = (dto: ClientDTO) => {
+		const client: Client = new Client(
+			Guid.newGuid().toString(),
+			dto.name,
+			dto.address,
+			dto.city,
+			dto.email
+		);
+
+		setClients([...clients, client]);
+	}
+
+	const removeClient = (clientId: string) => {
+		const result = clients.filter(p => p.id !== clientId);
+		setClients(result);
+	}
+
+	const editClient = (clientId: string, dto: ClientDTO) => {
+
+		const idxClient = clients.findIndex(p => p.id === clientId);
+
+		if (idxClient !== -1) {
+
+			clients[idxClient].name = dto.name;
+			clients[idxClient].address = dto.address;
+			clients[idxClient].city = dto.city;
+			clients[idxClient].email = dto.email;
+
+			setClients([...clients]);
+		}
+
+	}
+	//#endregion
 
 	const data = {
 		budgets,
 		addBudget,
 		removeBudget,
-		editBudget
+		editBudget,
+
+		clients,
+		addClient,
+		removeClient,
+		editClient,
 	};
 
 	return (
