@@ -1,32 +1,46 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Button, PageHeader } from 'antd';
+import {
+	PlusCircleOutlined,
+} from '@ant-design/icons'
+
 import { ProductsList } from "../../components";
 import { Config } from "../../configs";
 
 const Products: React.FC = () => {
+
+	const history = useHistory();
+
+	const breadcrumb = [
+		{
+			path: `${Config.BASE_URL}/`,
+			breadcrumbName: 'Home',
+		},
+		{
+			path: `${Config.BASE_URL}/products`,
+			breadcrumbName: 'Produtos',
+		},
+	];
+
 	return (
 		<>
-			<ul className="uk-breadcrumb">
-				<li>
-					<Link to={`${Config.BASE_URL}/`}>Home</Link>
-				</li>
-				<li>
-					<span>Produtos</span>
-				</li>
-			</ul>
-
-			<nav className="uk-navbar">
-				<div className="uk-navbar-right">
-					<ul className="uk-navbar-nav">
-						<li>
-							<Link to={`${Config.BASE_URL}/products/create`}>
-								<span uk-icon="icon: plus; ratio: 1.2"></span>{" "}
-								Adicionar novo produto
-							</Link>
-						</li>
-					</ul>
-				</div>
-			</nav>
+			<PageHeader
+				className="site-page-header"
+				title="Produtos"
+				breadcrumb={{ routes: breadcrumb }}
+				subTitle="Listagem de produtos"
+				extra={[
+					<Button
+						type="primary"
+						shape="round"
+						icon={<PlusCircleOutlined />}
+						size="large"
+						onClick={() => { history.push(`${Config.BASE_URL}/products/create`); }}>
+						Adicionar Produto
+					</Button>
+				]}
+			/>
 
 			<ProductsList />
 		</>
