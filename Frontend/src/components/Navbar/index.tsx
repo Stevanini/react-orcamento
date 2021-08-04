@@ -1,22 +1,38 @@
 import React from "react";
+import { Layout, Menu } from 'antd';
+
+import {
+	DashboardOutlined,
+	ExceptionOutlined,
+	ShoppingOutlined
+} from '@ant-design/icons';
+
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+import './styles.css';
+import { Config } from "../../configs";
+
+const { Sider } = Layout;
+
+const Navbar = (props: any) => {
+
 	return (
-		<div className="uk-background-primary ">
-			<div className="uk-container">
-				<nav className="uk-navbar">
-					<div className="uk-navbar-left">
-						<Link
-							to="/"
-							className="uk-navbar-item uk-text-decoration-none uk-logo ro-white"
-						>
-							Gereciador de Orçamentos
-						</Link>
-					</div>
-				</nav>
-			</div>
-		</div>
+		<Sider trigger={null} collapsible collapsed={props.collapse}>
+			<Link to={`${Config.BASE_URL}/`}>
+				<h4 className={!props.collapse ? 'logo' : 'logo-collapse'}>Gerenciador de Orçamento</h4>
+			</Link>
+			<Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+				<Menu.Item key="1" icon={<DashboardOutlined />}>
+					<Link to={`${Config.BASE_URL}/`}>Home</Link>
+				</Menu.Item>
+				<Menu.Item key="2" icon={<ShoppingOutlined />}>
+					<Link to={`${Config.BASE_URL}/products`}>Produtos</Link>
+				</Menu.Item>
+				<Menu.Item key="3" icon={<ExceptionOutlined />}>
+					<Link to={`${Config.BASE_URL}/budgets`}>Orçamentos</Link>
+				</Menu.Item>
+			</Menu>
+		</Sider>
 	);
 };
 
