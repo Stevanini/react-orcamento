@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { ProductContextType, ProductsContext } from "../../contexts";
 import { Product, ProductDTO } from "../../models";
 import { Config } from "../../configs";
+import { Modal } from "antd";
 
 const schema = yup.object().shape({
 	title: yup.string().min(5).max(30).required("Título inválido"),
@@ -23,15 +24,15 @@ interface AddProductForm {
 	discount: number;
 }
 
-interface AddProductParams {
-	productId: string;
+interface CreateProductProps {
+	productId?: string;
+	isModalVisible: boolean;
+	setIsModalVisible: (visible: boolean) => void;
 }
 
-const CreateProduct: React.FC = () => {
-	const history = useHistory();
+const CreateProduct: React.FC<CreateProductProps> = (props) => {
 
-	let { productId } = useParams<AddProductParams>();
-	console.log(productId);
+	let { productId, setIsModalVisible, isModalVisible } = props;
 
 	const { products, addProduct, editProduct } = useContext<ProductContextType>(ProductsContext);
 
@@ -73,26 +74,17 @@ const CreateProduct: React.FC = () => {
 		}
 
 		e.target.reset();
-		history.push(`${Config.BASE_URL}/products`);
+		setIsModalVisible(false);
 	}
 
 	return (
-		<>
-			<ul className="uk-breadcrumb">
-				<li>
-					<Link to={`${Config.BASE_URL}/`}>Home</Link>
-				</li>
-				<li>
-					<Link to={`${Config.BASE_URL}/products`}>Produtos</Link>
-				</li>
-				<li>
-					<span>{productId ? "Editar" : "Criar"} produto</span>
-				</li>
-			</ul>
+		<Modal
+			title={productId ? "Editar Produto" : "Criar Produto"}
+			visible={isModalVisible}
+			footer={null}
+			onCancel={() => { setIsModalVisible(false) }}>
 
 			<form onSubmit={handleSubmit<AddProductForm>(onSubmit)} className="uk-form-stacked">
-				<h4>{productId ? "Editar" : "Criar"} produto</h4>
-
 				<label className="uk-margin uk-form-label">Título do produto</label>
 				<div className="uk-form-controls">
 					<input
@@ -181,10 +173,12 @@ const CreateProduct: React.FC = () => {
 				</div>
 
 				<div className="uk-width-1-1">
-					<button type="submit" className="uk-button uk-button-primary">{productId ? "Editar" : "Salvar"}</button>
+					<button type="submit" className="uk-button uk-button-primary">
+						{productId ? "Editar" : "Salvar"}
+					</button>
 				</div>
 			</form>
-		</>
+		</Modal>
 	);
 };
 

@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, PageHeader } from 'antd';
 import {
 	PlusCircleOutlined,
 } from '@ant-design/icons'
 
-import { ProductsList } from "../../components";
+import { CreateProduct, ProductsList } from "../../components";
 import { Config } from "../../configs";
 
 const Products: React.FC = () => {
 
 	const history = useHistory();
+
+	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+	const changeModal = (visible = false): void => {
+		setIsModalVisible(visible);
+	};
 
 	const breadcrumb = [
 		{
@@ -36,10 +42,15 @@ const Products: React.FC = () => {
 						shape="round"
 						icon={<PlusCircleOutlined />}
 						size="large"
-						onClick={() => { history.push(`${Config.BASE_URL}/products/create`); }}>
+						onClick={() => { changeModal(true) }}>
 						Adicionar Produto
 					</Button>
 				]}
+			/>
+
+			<CreateProduct
+				isModalVisible={isModalVisible}
+				setIsModalVisible={changeModal}
 			/>
 
 			<ProductsList />
