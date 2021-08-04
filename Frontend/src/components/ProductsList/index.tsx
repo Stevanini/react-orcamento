@@ -55,6 +55,7 @@ const ProductsList = () => {
 						shape="circle"
 						icon={<DeleteOutlined />}
 						size="middle"
+						danger
 						onClick={() => onRemove(record.id)} />
 				</Space>
 			)
