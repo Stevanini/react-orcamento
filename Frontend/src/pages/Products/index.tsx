@@ -13,9 +13,15 @@ const Products: React.FC = () => {
 	const history = useHistory();
 
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+	const [productId, setProductId] = useState<string>("");
 
 	const changeModal = (visible = false): void => {
 		setIsModalVisible(visible);
+	};
+
+	const changeProductId = (id: string): void => {
+		setProductId(id)
+		changeModal(true);
 	};
 
 	const breadcrumb = [
@@ -42,18 +48,24 @@ const Products: React.FC = () => {
 						shape="round"
 						icon={<PlusCircleOutlined />}
 						size="large"
-						onClick={() => { changeModal(true) }}>
+						onClick={() => {
+							setProductId("");
+							changeModal(true)
+						}}>
 						Adicionar Produto
 					</Button>
 				]}
 			/>
 
 			<CreateProduct
+				productId={productId}
 				isModalVisible={isModalVisible}
 				setIsModalVisible={changeModal}
 			/>
 
-			<ProductsList />
+			<ProductsList
+				setProductId={changeProductId}
+			/>
 		</>
 	);
 };

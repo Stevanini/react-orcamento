@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { Table, Button, Space } from 'antd';
+import { Modal, Table, Button, Space } from 'antd';
 import {
 	EditOutlined,
 	DeleteOutlined,
+	ExclamationCircleOutlined,
 } from '@ant-design/icons';
 
 import { ProductsContext, ProductContextType } from "../../contexts";
@@ -10,19 +11,40 @@ import { Config } from "../../configs";
 import { useHistory } from "react-router-dom";
 import { Product } from "../../models";
 
-const ProductsList = () => {
+const { confirm } = Modal;
+
+interface ProductListProps {
+	setProductId: (id: string) => void;
+}
+
+const ProductsList: React.FC<ProductListProps> = (props) => {
+	const { setProductId } = props;
+
 	const { products } = useContext<ProductContextType>(ProductsContext);
 
 	const history = useHistory();
 
 	const { removeProduct } = useContext<ProductContextType>(ProductsContext);
 
-	const onRemove = (productId: string) => {
-		removeProduct(productId);
+	const onRemove = (product: Product) => {
+		confirm({
+			title: `Tem ceteza que você quer remover o produto ${product.title}?`,
+			icon: <ExclamationCircleOutlined />,
+			content: 'Remova só se tiver certeza.',
+			okText: 'Sim',
+			okType: 'danger',
+			cancelText: 'Não',
+			onOk() {
+				removeProduct(product.id);
+			},
+			onCancel() {
+				console.log('Cancel');
+			},
+		});
 	};
 
 	const onEdit = (productId: string) => {
-		history.push(`${Config.BASE_URL}/products/create/${productId}`);
+		setProductId(productId);
 	};
 
 	const columns = [
@@ -56,7 +78,7 @@ const ProductsList = () => {
 						icon={<DeleteOutlined />}
 						size="middle"
 						danger
-						onClick={() => onRemove(record.id)} />
+						onClick={() => onRemove(record)} />
 				</Space>
 			)
 		}
