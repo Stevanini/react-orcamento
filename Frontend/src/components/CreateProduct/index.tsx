@@ -1,20 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link, useParams, useHistory } from "react-router-dom";
-import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
+import React, { useContext, useEffect } from "react";
+import { Button, Form, Input, Modal, Row, Space } from "antd";
 
 import { ProductContextType, ProductsContext } from "../../contexts";
 import { Product, ProductDTO } from "../../models";
-import { Config } from "../../configs";
-import { Modal } from "antd";
-
-const schema = yup.object().shape({
-	title: yup.string().min(5).max(30).required("Título inválido"),
-	description: yup.string().min(5).max(80).required("Descrição inválido"),
-	salePrice: yup.number().min(0).required("Preço inválido"),
-	providerPrice: yup.number().min(0).required("Preço inválido"),
-});
 
 interface AddProductForm {
 	title: string;
@@ -30,34 +18,42 @@ interface CreateProductProps {
 	setIsModalVisible: (visible: boolean) => void;
 }
 
-const CreateProduct: React.FC<CreateProductProps> = (props) => {
-
-	let { productId, setIsModalVisible, isModalVisible } = props;
+const CreateProduct: React.FC<CreateProductProps> = ({ productId, isModalVisible, setIsModalVisible }) => {
 
 	const { products, addProduct, editProduct } = useContext<ProductContextType>(ProductsContext);
 
-	const [product, setProduct] = useState<Product>({} as Product);
-
-	const { register, handleSubmit, formState: { errors }, setValue } = useForm({
-		resolver: yupResolver(schema)
-	});
+	const [form] = Form.useForm();
 
 	useEffect(() => {
+		form.setFieldsValue({
+			title: '',
+			description: '',
+			salePrice: 0,
+			providerPrice: 0,
+			discount: 0,
+		} as Product);
+
+		form.setFieldsValue(prepareInitialValues());
+	}, [productId]);
+
+	const prepareInitialValues = (): Product => {
 		const productBase = products.find(p => p.id === productId);
 
-		setValue('title', productBase?.title);
-		setValue('description', productBase?.description);
-		setValue('salePrice', productBase?.salePrice);
-		setValue('providerPrice', productBase?.providerPrice);
-		setValue('discount', productBase?.discount);
+		if (productBase) {
+			return {
+				title: productBase.title,
+				description: productBase.description,
+				salePrice: productBase.salePrice,
+				providerPrice: productBase.providerPrice,
+				discount: productBase.discount,
+			} as Product;
+		}
 
-		setProduct(productBase || {} as Product);
-	}, [productId, products, setValue]);
+		return {} as Product;
+	}
 
+	const onFinish = (data: AddProductForm): void => {
 
-	const onSubmit = (data: AddProductForm, e: any) => {
-
-		console.log(data);
 		const newPproduct: ProductDTO = {
 			title: data.title,
 			description: data.description,
@@ -73,111 +69,104 @@ const CreateProduct: React.FC<CreateProductProps> = (props) => {
 			addProduct(newPproduct);
 		}
 
-		e.target.reset();
 		setIsModalVisible(false);
+		form.resetFields();
 	}
+
+
+	const validateMessages = {
+		required: '${label} is required!',
+		types: {
+			email: '${label} is not a valid email!',
+			number: '${label} is not a valid number!',
+		},
+		number: {
+			range: '${label} must be between ${min} and ${max}',
+		},
+	};
 
 	return (
 		<Modal
 			title={productId ? "Editar Produto" : "Criar Produto"}
 			visible={isModalVisible}
 			footer={null}
-			onCancel={() => { setIsModalVisible(false) }}>
+			onCancel={() => { setIsModalVisible(false) }}
+		>
 
-			<form onSubmit={handleSubmit<AddProductForm>(onSubmit)} className="uk-form-stacked">
-				<label className="uk-margin uk-form-label">Título do produto</label>
-				<div className="uk-form-controls">
-					<input
-						type="text"
-						id="title"
-						placeholder="Titulo do produto"
-						className="uk-input"
-						{...register('title')}
-						value={product.title || ''}
-						onChange={e => {
-							register('title')
-							setProduct(Object.assign({}, product, { title: e.target.value }))
-						}}
-					/>
-					{errors.title && errors.title.type === "required" &&
-						<span><small><strong className="uk-text-danger">O título é obrigatório.</strong></small></span>}
-					{errors.title && (errors.title.type === "min" || errors.title.type === "max") &&
-						<span><small><strong className="uk-text-danger">O título deve ter entre 5 e 30 caracteres</strong></small></span>}
-				</div>
+			<Form
+				form={form}
+				name="form-create-edit-product"
+				layout="vertical"
+				onFinish={onFinish}
+				initialValues={prepareInitialValues()}
+				validateMessages={validateMessages}
+			>
+				<Form.Item
+					label="Título do produto"
+					name="title"
+					rules={[
+						{ required: true, message: "Título é obrigatório" },
+						{ min: 5, max: 30, message: "Título deve ter entre 5 e 30 caracteres" },
+					]}
+				>
+					<Input placeholder="Nome do produto" />
+				</Form.Item>
 
-				<label className="uk-margin uk-form-label">Descrição do produto</label>
-				<div className="uk-form-controls">
-					<input
-						type="text"
-						id="description"
-						placeholder="Breve descrição do produto"
-						className="uk-input"
-						{...register('description')}
-						value={product.description || ''}
-						onChange={e => {
-							register('description');
-							setProduct(Object.assign({}, product, { description: e.target.value }));
-						}}
-					/>
-					{errors.description && errors.description.type === "required" &&
-						<span><small><strong className="uk-text-danger">A descrição é obrigatório.</strong></small></span>}
-					{errors.description && (errors.description.type === "min" || errors.description.type === "max") &&
-						<span><small><strong className="uk-text-danger">A descrição deve ter entre 5 e 80 caracteres</strong></small></span>}
-				</div>
+				<Form.Item
+					label="Descrição do produt"
+					name="description"
+					rules={[
+						{ required: true, message: "A descrição é obrigatória" },
+						{ min: 5, max: 80, message: "A descrição deve ter entre 5 e 80 caracteres" },
+					]}
+				>
+					<Input placeholder="Breve descrição do produto" />
+				</Form.Item>
 
 
-				<div className="uk-margin  uk-column-1-2">
+				<Row>
+					<Space>
 
-					<label className="uk-margin uk-form-label">Preço de custo do produto</label>
-					<div className="uk-form-controls">
-						<input
-							type="number"
-							id="providerPrice"
-							placeholder="Preço de custo do produto"
-							className="uk-input"
-							step="0.01"
-							{...register('providerPrice')}
-							value={product.providerPrice || 0}
-							onChange={e => {
-								register('providerPrice');
-								setProduct(Object.assign({}, product, { providerPrice: e.target.value }))
-							}}
-						/>
-						{errors.providerPrice && (errors.providerPrice.type === "required" || errors.providerPrice.type === "typeError") &&
-							<span><small><strong className="uk-text-danger">O preço é obrigatório.</strong></small></span>}
-						{errors.providerPrice && errors.providerPrice.type === "min" &&
-							<span><small><strong className="uk-text-danger">O preço não pode ser negativo</strong></small></span>}
-					</div>
+						<Form.Item
+							label="Preço de CUSTO do produto"
+							name="providerPrice"
+							rules={[
+								{ required: true, message: "O preço é obrigatório" }
+							]}
+						>
+							<Input
+								type="number"
+								addonBefore="R$"
+								placeholder="Preço de custo do produto"
+								step="0.01"
+								min={0}
+							/>
+						</Form.Item>
 
-					<label className="uk-margin uk-form-label">Preço de venda do produto</label>
-					<div className="uk-form-controls">
-						<input
-							type="number"
-							id="salePrice"
-							placeholder="Preço de venda do produto"
-							className="uk-input"
-							step="0.01"
-							{...register('salePrice')}
-							value={product.salePrice || 0}
-							onChange={e => {
-								register('salePrice');
-								setProduct(Object.assign({}, product, { salePrice: e.target.value }))
-							}}
-						/>
-						{errors.salePrice && (errors.salePrice.type === "required" || errors.salePrice.type === "typeError") &&
-							<span><small><strong className="uk-text-danger">O preço é obrigatório.</strong></small></span>}
-						{errors.salePrice && errors.salePrice.type === "min" &&
-							<span><small><strong className="uk-text-danger">O preço não pode ser negativo</strong></small></span>}
+						<Form.Item
+							label="Preço de VENDA do produto"
+							name="salePrice"
+							rules={[
+								{ required: true, message: "O preço de venda do produto é obrigatório" }
+							]}
+						>
+							<Input
+								type="number"
+								addonBefore="R$"
+								placeholder="Preço de venda do produto"
+								step="0.01"
+								min={0}
+							/>
+						</Form.Item>
+					</Space>
+				</Row>
 
-					</div>
-				</div>
-
-				<div className="uk-width-1-1">
-					<button type="submit" className="uk-button uk-button-primary">
+				<Form.Item>
+					<Button type="primary" htmlType="submit">
 						{productId ? "Editar" : "Salvar"}
-					</button>
-				</div>
-			</form>
+					</Button>
+				</Form.Item>
+			</Form>
 		</Modal>
 	);
 };

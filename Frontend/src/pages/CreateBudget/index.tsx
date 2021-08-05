@@ -15,7 +15,6 @@ const CreateBudget = () => {
 
 
 	let { budgetId } = useParams<AddBudgetParams>();
-	console.log("budgetId", budgetId);
 
 	const { products } = useContext<ProductContextType>(ProductsContext);
 

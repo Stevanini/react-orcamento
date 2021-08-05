@@ -21,13 +21,11 @@ interface AddBudgetParams {
 
 
 const Pdf = () => {
-	console.log("pdf");
 
 	let { budgetId } = useParams<AddBudgetParams>();
 
 	const { budgets } = useContext<BudgetContextType>(BudgetsContext);
 
-	console.log(budgetId, budgets);
 	const [budget, setBudget] = useState<Budget>({} as Budget);
 
 	useEffect(() => {

@@ -38,7 +38,6 @@ const ProductsList: React.FC<ProductListProps> = (props) => {
 				removeProduct(product.id);
 			},
 			onCancel() {
-				console.log('Cancel');
 			},
 		});
 	};
