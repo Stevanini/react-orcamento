@@ -7,8 +7,6 @@ import {
 } from '@ant-design/icons';
 
 import { ProductsContext, ProductContextType } from "../../contexts";
-import { Config } from "../../configs";
-import { useHistory } from "react-router-dom";
 import { Product } from "../../models";
 
 const { confirm } = Modal;
@@ -19,12 +17,7 @@ interface ProductListProps {
 
 const ProductsList: React.FC<ProductListProps> = (props) => {
 	const { setProductId } = props;
-
-	const { products } = useContext<ProductContextType>(ProductsContext);
-
-	const history = useHistory();
-
-	const { removeProduct } = useContext<ProductContextType>(ProductsContext);
+	const { products, removeProduct } = useContext<ProductContextType>(ProductsContext);
 
 	const onRemove = (product: Product) => {
 		confirm({

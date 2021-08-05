@@ -1,34 +1,71 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Button, PageHeader } from 'antd';
+import {
+	PlusCircleOutlined,
+} from '@ant-design/icons'
+
 import { BudgetsList } from "../../components";
 import { Config } from "../../configs";
 
 const Budgets: React.FC = () => {
+
+	const history = useHistory();
+
+	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+	const [budgetId, setBudgetId] = useState<string>("");
+
+	const changeModal = (visible = false): void => {
+		setIsModalVisible(visible);
+	};
+
+	const changeBudgetId = (id: string): void => {
+		setBudgetId(id)
+		changeModal(true);
+	};
+
+	const breadcrumb = [
+		{
+			path: `${Config.BASE_URL}/`,
+			breadcrumbName: 'Home',
+		},
+		{
+			path: `${Config.BASE_URL}/budgets`,
+			breadcrumbName: 'Orçamentos',
+		},
+	];
+
 	return (
 		<>
-			<ul className="uk-breadcrumb">
-				<li>
-					<Link to={`${Config.BASE_URL}/`}>Home</Link>
-				</li>
-				<li>
-					<span>Orçamentos</span>
-				</li>
-			</ul>
+			<PageHeader
+				className="site-page-header"
+				title="Orçamentos"
+				breadcrumb={{ routes: breadcrumb }}
+				subTitle="Listagem de produtos"
+				extra={[
+					<Button
+						type="primary"
+						shape="round"
+						icon={<PlusCircleOutlined />}
+						size="large"
+						onClick={() => {
+							setBudgetId("");
+							changeModal(true)
+						}}>
+						Adicionar Orçamento
+					</Button>
+				]}
+			/>
 
-			<nav className="uk-navbar">
-				<div className="uk-navbar-right">
-					<ul className="uk-navbar-nav">
-						<li>
-							<Link to={`${Config.BASE_URL}/budgets/create`}>
-								<span uk-icon="icon: plus; ratio: 1.2"></span>{" "}
-								Adicionar novo orçamento
-							</Link>
-						</li>
-					</ul>
-				</div>
-			</nav>
-
-			<BudgetsList />
+			{/* <CreateBudget
+				budgetId={budgetId}
+				isModalVisible={isModalVisible}
+				setIsModalVisible={changeModal}
+			/>
+*/}
+			<BudgetsList
+				setBudgetId={changeBudgetId}
+			/>
 		</>
 	);
 };
