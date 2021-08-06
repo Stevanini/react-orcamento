@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/react-orcamento/static/css/main.50aeb98e.chunk.css",
-    "main.js": "/react-orcamento/static/js/main.4de4778e.chunk.js",
-    "main.js.map": "/react-orcamento/static/js/main.4de4778e.chunk.js.map",
+    "main.js": "/react-orcamento/static/js/main.33207dec.chunk.js",
+    "main.js.map": "/react-orcamento/static/js/main.33207dec.chunk.js.map",
     "runtime-main.js": "/react-orcamento/static/js/runtime-main.522e0b94.js",
     "runtime-main.js.map": "/react-orcamento/static/js/runtime-main.522e0b94.js.map",
     "static/css/2.3804ad1f.chunk.css": "/react-orcamento/static/css/2.3804ad1f.chunk.css",
-    "static/js/2.fcacedf1.chunk.js": "/react-orcamento/static/js/2.fcacedf1.chunk.js",
-    "static/js/2.fcacedf1.chunk.js.map": "/react-orcamento/static/js/2.fcacedf1.chunk.js.map",
+    "static/js/2.910036ba.chunk.js": "/react-orcamento/static/js/2.910036ba.chunk.js",
+    "static/js/2.910036ba.chunk.js.map": "/react-orcamento/static/js/2.910036ba.chunk.js.map",
     "index.html": "/react-orcamento/index.html",
     "static/css/2.3804ad1f.chunk.css.map": "/react-orcamento/static/css/2.3804ad1f.chunk.css.map",
     "static/css/main.50aeb98e.chunk.css.map": "/react-orcamento/static/css/main.50aeb98e.chunk.css.map",
-    "static/js/2.fcacedf1.chunk.js.LICENSE.txt": "/react-orcamento/static/js/2.fcacedf1.chunk.js.LICENSE.txt"
+    "static/js/2.910036ba.chunk.js.LICENSE.txt": "/react-orcamento/static/js/2.910036ba.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.522e0b94.js",
     "static/css/2.3804ad1f.chunk.css",
-    "static/js/2.fcacedf1.chunk.js",
+    "static/js/2.910036ba.chunk.js",
     "static/css/main.50aeb98e.chunk.css",
-    "static/js/main.4de4778e.chunk.js"
+    "static/js/main.33207dec.chunk.js"
   ]
 }
