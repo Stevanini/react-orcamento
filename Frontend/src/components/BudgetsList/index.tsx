@@ -30,8 +30,7 @@ const BudgetsList: React.FC<BudgetListProps> = (props) => {
 			onOk() {
 				removeBudget(budget.id);
 			},
-			onCancel() {
-			},
+			onCancel() { }
 		});
 	};
 

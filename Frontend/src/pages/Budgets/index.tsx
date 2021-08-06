@@ -5,7 +5,7 @@ import {
 	PlusCircleOutlined,
 } from '@ant-design/icons'
 
-import { BudgetsList } from "../../components";
+import { BudgetsList, CreateBudget } from "../../components";
 import { Config } from "../../configs";
 
 const Budgets: React.FC = () => {
@@ -57,12 +57,12 @@ const Budgets: React.FC = () => {
 				]}
 			/>
 
-			{/* <CreateBudget
+			<CreateBudget
 				budgetId={budgetId}
 				isModalVisible={isModalVisible}
 				setIsModalVisible={changeModal}
 			/>
-*/}
+
 			<BudgetsList
 				setBudgetId={changeBudgetId}
 			/>
