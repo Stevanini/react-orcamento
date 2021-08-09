@@ -73,7 +73,7 @@ const CreateClient: React.FC<CreateClientProps> = ({ clientId, isModalVisible, s
 			>
 				<Form
 					form={form}
-					name="form-create-edit-product"
+					name="form-create-edit-client"
 					layout="vertical"
 					onFinish={onFinish}
 					initialValues={prepareInitialValues()}

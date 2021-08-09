@@ -196,7 +196,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 			>
 				<Form
 					form={form}
-					name="form-create-edit-product"
+					name="form-create-edit-budget"
 					layout="vertical"
 					onFinish={onFinish}
 					initialValues={prepareInitialValues()}
