@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import { Budgets, Home, Products, Pdf } from "../pages";
+import { Budgets, Home, Products, Pdf, Clients } from "../pages";
 import { Config } from "../configs";
 
 const Routes: React.FC = () => {
@@ -13,6 +13,7 @@ const Routes: React.FC = () => {
 
 			<Route path={`${Config.BASE_URL}/budgets`} exact component={Budgets} />
 			<Route path={`${Config.BASE_URL}/budgets/pdf/:budgetId`} component={Pdf} />
+			<Route path={`${Config.BASE_URL}/clients`} exact component={Clients} />
 
 			<Redirect from="*" to={`${Config.BASE_URL}/`} />
 		</Switch>

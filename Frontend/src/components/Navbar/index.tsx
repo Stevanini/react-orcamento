@@ -25,10 +25,13 @@ const Navbar = (props: any) => {
 				<Menu.Item key="1" icon={<DashboardOutlined />}>
 					<Link to={`${Config.BASE_URL}/`}>Home</Link>
 				</Menu.Item>
-				<Menu.Item key="2" icon={<ShoppingOutlined />}>
+				<Menu.Item key="2" icon={<ExceptionOutlined />}>
+					<Link to={`${Config.BASE_URL}/clients`}>Clientes</Link>
+				</Menu.Item>
+				<Menu.Item key="3" icon={<ShoppingOutlined />}>
 					<Link to={`${Config.BASE_URL}/products`}>Produtos</Link>
 				</Menu.Item>
-				<Menu.Item key="3" icon={<ExceptionOutlined />}>
+				<Menu.Item key="4" icon={<ExceptionOutlined />}>
 					<Link to={`${Config.BASE_URL}/budgets`}>Orçamentos</Link>
 				</Menu.Item>
 			</Menu>
