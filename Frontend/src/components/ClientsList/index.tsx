@@ -45,9 +45,19 @@ const ClientsList: React.FC<ClientListProps> = (props) => {
 				<span>{record.name}</span>,
 		},
 		{
-			title: 'email',
+			title: 'E-mail',
 			render: (_: any, record: Client) =>
 				<span>{record.email}</span>,
+		},
+		{
+			title: 'Endereço',
+			render: (_: any, record: Client) =>
+				<span>{record.address}</span>,
+		},
+		{
+			title: 'Cidade',
+			render: (_: any, record: Client) =>
+				<span>{record.city}</span>,
 		},
 		{
 			title: 'Ações',

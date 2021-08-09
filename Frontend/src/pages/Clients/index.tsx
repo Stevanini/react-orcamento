@@ -63,10 +63,9 @@ const Clients: React.FC = () => {
 				setIsModalVisible={changeModal}
 			/>
 
-			{/* 
 			<ClientsList
 				setClientId={changeClientId}
-			/> */}
+			/>
 		</>
 	);
 };
