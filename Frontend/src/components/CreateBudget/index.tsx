@@ -47,6 +47,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 	const [form] = Form.useForm();
 
 	useEffect(() => {
+		clearFormModal();
 		form.setFieldsValue({
 			id: "",
 			client: {} as Client,
@@ -106,6 +107,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 		}
 
 		clearFormModal();
+		setIsModalVisible(false);
 	}
 
 	//#region Table ProdcutsBudgets
@@ -192,7 +194,6 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 	//#endregion
 
 	const clearFormModal = (): void => {
-		setIsModalVisible(false);
 		form.resetFields();
 		setProductBudget({} as ProductBudget);
 		setListProductsBudget([] as ProductBudget[]);
@@ -204,7 +205,10 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 				title={budgetId ? "Editar orçamento" : "Criar orçamento"}
 				visible={isModalVisible}
 				footer={null}
-				onCancel={clearFormModal}
+				onCancel={() => {
+					clearFormModal();
+					setIsModalVisible(false);
+				}}
 				width={1000}
 			>
 				<Form
