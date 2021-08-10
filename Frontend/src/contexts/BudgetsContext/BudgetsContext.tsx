@@ -4,7 +4,7 @@ import { Guid } from 'guid-ts';
 import { BudgetContextType } from './BudgetContextType';
 import { Budget, BudgetDTO, Client, ClientDTO } from '../../models';
 import { getBudgets, saveBudgets } from '../../services/BudgetsService';
-import { getClients, saveClients } from '../../services/ClientService';
+import { getClients } from '../../services/ClientService';
 
 export const BudgetsContext = createContext<BudgetContextType>({
 	budgets: [],
@@ -25,7 +25,7 @@ const BudgetsProvider = (props: any) => {
 	const [clients, setClients] = useState<Client[]>(getClients);
 
 	useEffect(() => {
-		saveClients(clients);
+		setClients(clients);
 	}, [clients])
 
 	useEffect(() => {

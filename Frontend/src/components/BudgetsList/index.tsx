@@ -67,7 +67,7 @@ const BudgetsList: React.FC<BudgetListProps> = (props) => {
 		{
 			title: 'Total',
 			render: (_: any, record: Budget) =>
-				<span>R$ {record.total.toLocaleString("pt-BR")}</span>,
+				<span>R$ {record.total && record.total.toLocaleString("pt-BR")}</span>,
 		},
 		{
 			title: 'Ações',

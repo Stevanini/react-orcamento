@@ -7,6 +7,7 @@ import {
 
 import { BudgetContextType, BudgetsContext, ProductContextType, ProductsContext } from "../../contexts";
 import { Budget, BudgetDTO, Client, ProductBudget } from "../../models";
+import TextArea from "antd/lib/input/TextArea";
 
 
 interface AddBudgetForm {
@@ -57,8 +58,31 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 			total: 0,
 		} as Budget);
 
+		const budg = budgets.find(c => c.id === budgetId) || {} as Budget;
+		if (budgetId && budg) {
+			setListProductsBudget(budg.products);
+		}
+
 		form.setFieldsValue(prepareInitialValues());
-	}, [budgetId]);
+	}, [budgetId, isModalVisible]);
+
+	const prepareInitialValues = (): AddBudgetForm => {
+		const budgetBase = budgets.find(p => p.id === budgetId);
+
+		if (budgetBase) {
+			return {
+				id: budgetId,
+				clientId: budgetBase.client.id,
+				discount: budgetBase.discount,
+				endDate: budgetBase.endDate,
+				startDate: budgetBase.startDate,
+				notes: budgetBase.notes
+			} as AddBudgetForm;
+
+		}
+
+		return {} as AddBudgetForm;
+	}
 
 	const onFinish = (data: AddBudgetForm): void => {
 
@@ -69,7 +93,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 			endDate: data.endDate,
 			notes: data.notes,
 			total: data.total,
-			
+
 			client: client,
 			startDate: new Date(),
 			products: listProductsBudget,
@@ -81,27 +105,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 			addBudget(newBudget);
 		}
 
-		setIsModalVisible(false);
-		form.resetFields();
-	}
-
-	const prepareInitialValues = (): Budget => {
-		const budgetBase = budgets.find(p => p.id === budgetId);
-
-		if (budgetBase) {
-			return {
-				id: budgetBase.id,
-				client: budgetBase.client,
-				discount: budgetBase.discount,
-				endDate: budgetBase.endDate,
-				startDate: budgetBase.startDate,
-				notes: budgetBase.notes,
-				products: budgetBase.products,
-				total: budgetBase.total,
-			} as Budget;
-		}
-
-		return {} as Budget;
+		clearFormModal();
 	}
 
 	//#region Table ProdcutsBudgets
@@ -181,9 +185,18 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 		} else {
 			setListProductsBudget([...listProductsBudget, productBudget]);
 		}
+
+		setProductBudget({} as ProductBudget);
 	}
 
 	//#endregion
+
+	const clearFormModal = (): void => {
+		setIsModalVisible(false);
+		form.resetFields();
+		setProductBudget({} as ProductBudget);
+		setListProductsBudget([] as ProductBudget[]);
+	}
 
 	return (
 		<>
@@ -191,7 +204,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 				title={budgetId ? "Editar orçamento" : "Criar orçamento"}
 				visible={isModalVisible}
 				footer={null}
-				onCancel={() => { setIsModalVisible(false) }}
+				onCancel={clearFormModal}
 				width={1000}
 			>
 				<Form
@@ -208,78 +221,86 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 					>
 						<Select
 							showSearch
-							style={{ width: 200 }}
 							placeholder="Selecione o cliente"
 							optionFilterProp="children"
 						>
 							{
 								clients.map(c => (
-									<Option key={c.id} value={c.id}>{c.name} - {c.email}</Option>
+									<Option
+										// selec={c.id === (budget.client && budget.client.id)}
+										key={c.id}
+										value={c.id}>
+										{c.name} - {c.email}
+									</Option>
 								))
 							}
 						</Select>
 					</Form.Item>
 
-					<Form.Item
-						label="Adicionar produtos"
+					<label>Adicionar Produtos</label>
+					<Space
+						direction='horizontal'
+						size={16}
+						style={{ marginBottom: 16 }}
 					>
-						<Space
-							direction='horizontal'
-							size={16}
-							style={{ marginBottom: 16 }}
+						<span>Produto: </span>
+						<Select
+							showSearch
+							style={{ width: 200 }}
+							placeholder="Selecione o produto"
+							optionFilterProp="children"
+							value={productBudget?.id ?? ""}
+							onChange={onChangeSelectProduct}
 						>
-							<span>Produto: </span>
-							<Select
-								showSearch
-								style={{ width: 200 }}
-								placeholder="Selecione o produto"
-								optionFilterProp="children"
-								onChange={onChangeSelectProduct}
-							>
-								{
-									products.map(c => (
-										<Option key={c.id} value={c.id}>{c.title}</Option>
-									))
-								}
-							</Select>
+							{
+								products.map(c => (
+									<Option key={c.id} value={c.id}>{c.title}</Option>
+								))
+							}
+						</Select>
 
-							<span>Quantidade: </span>
-							<InputNumber
-								placeholder="Quantidade"
-								min={1}
-								value={productBudget.quantity}
-								onChange={(value: number) => {
-									setProductBudget({ ...productBudget, quantity: value } as ProductBudget);
-								}}
-							/>
-
-							<span>Desconto: </span>
-							<InputNumber
-								placeholder="Desconto no produto"
-								min={0}
-								max={100}
-								value={productBudget.discount}
-								onChange={(value: number) => {
-									setProductBudget({ ...productBudget, discount: value } as ProductBudget);
-								}}
-							/>
-							<Button type="primary" onClick={handleAddProductBudget}>Adicionar</Button>
-						</Space>
-
-						<Table
-							columns={columns}
-							dataSource={listProductsBudget}
+						<span>Quantidade: </span>
+						<InputNumber
+							placeholder="Quantidade"
+							min={1}
+							value={productBudget.quantity}
+							onChange={(value: number) => {
+								setProductBudget({ ...productBudget, quantity: value } as ProductBudget);
+							}}
 						/>
 
-					</Form.Item>
+						<span>Desconto: </span>
+						<InputNumber
+							placeholder="Desconto no produto"
+							min={0}
+							max={100}
+							value={productBudget.discount}
+							onChange={(value: number) => {
+								setProductBudget({ ...productBudget, discount: value } as ProductBudget);
+							}}
+						/>
+						<Button type="primary" onClick={handleAddProductBudget}>Adicionar</Button>
+					</Space>
+
+					<Table
+						columns={columns}
+						dataSource={listProductsBudget}
+					/>
 
 
-					{/* <Form.Item 
-						name="endDate" 
+
+					{/* <Form.Item
+						name="endDate"
 						label="Data de validade">
 						<DatePicker />
 					</Form.Item> */}
 
+					<Form.Item
+						label="Observações/Anotações"
+						name="notes"
+					>
+						<TextArea />
+					</Form.Item>
 
 					<Form.Item>
 						<Button type="primary" htmlType="submit">
