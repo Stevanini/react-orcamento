@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Button, PageHeader } from 'antd';
 import {
 	PlusCircleOutlined,
@@ -9,8 +8,6 @@ import { BudgetsList, CreateBudget } from "../../components";
 import { Config } from "../../configs";
 
 const Budgets: React.FC = () => {
-
-	const history = useHistory();
 
 	const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 	const [budgetId, setBudgetId] = useState<string>("");

@@ -4,10 +4,13 @@ import {
 	EditOutlined,
 	DeleteOutlined,
 	ExclamationCircleOutlined,
+	FilePdfOutlined,
 } from '@ant-design/icons';
 
 import { Budget } from "../../models";
 import { BudgetsContext, BudgetContextType } from "../../contexts";
+import { useHistory } from "react-router-dom";
+import { Config } from "../../configs";
 
 interface BudgetListProps {
 	setBudgetId: (id: string) => void;
@@ -16,6 +19,8 @@ interface BudgetListProps {
 const { confirm } = Modal;
 
 const BudgetsList: React.FC<BudgetListProps> = (props) => {
+	const history = useHistory();
+
 	const { setBudgetId } = props;
 	const { budgets, removeBudget } = useContext<BudgetContextType>(BudgetsContext);
 
@@ -36,6 +41,10 @@ const BudgetsList: React.FC<BudgetListProps> = (props) => {
 
 	const onEdit = (budgetId: string) => {
 		setBudgetId(budgetId);
+	};
+
+	const onSendPdf = (budgetId: string) => {
+		history.push(`${Config.BASE_URL}/budgets/pdf/budgetId=${budgetId}`);
 	};
 
 	const columns = [
@@ -74,6 +83,12 @@ const BudgetsList: React.FC<BudgetListProps> = (props) => {
 			key: 'action',
 			render: (_: any, record: Budget) => (
 				<Space size="middle">
+					<Button
+						type="ghost"
+						shape="circle"
+						icon={<FilePdfOutlined />}
+						size="middle"
+						onClick={() => onSendPdf(record.id)} />
 					<Button
 						type="primary"
 						shape="circle"
