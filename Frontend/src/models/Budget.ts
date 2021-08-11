@@ -1,33 +1,58 @@
+import IBudget from "../interfaces/IBudget";
 import { Client } from "./Client";
-import { ProductBudget } from './ProductBudget';
+import { ProductBudget } from "./ProductBudget";
 
-export class Budget {
+export class Budget implements IBudget {
+	id: string;
+	startDate: Date;
+	endDate: Date;
+	client: Client;
+	products: ProductBudget[];
+	notes: string;
+	discount = 0;;
+	total = 0;
+
 	constructor(
-		public id: string,
-		public startDate: Date,
-		public endDate: Date,
-		public client: Client,
-		public products: ProductBudget[],
-		public notes: string,
-		public discount: number,
-		public total: number
-	) { }
+		id: string,
+		endDate: Date,
+		client: Client,
+		products: ProductBudget[],
+		notes: string) {
 
-	public calculateSubTotal() {
+		Object.setPrototypeOf(this, Budget.prototype);
+
+		this.id = id;
+		this.startDate = new Date();
+		this.endDate = endDate;
+		this.client = client;
+		this.products = products;
+		this.notes = notes;
+		this.discount = 0;
+
+		this.calculateTotal();
+	}
+
+	calculateSubTotal() {
 		var calculate = 0;
 		this.products.forEach(function (p: ProductBudget) {
-			calculate += (p.salePrice * p.quantity);
+			calculate += p.total;
 		});
 		this.total = calculate;
+		return this.total;
 	}
 
-	public applyDiscount(discountPercent: number) {
-		this.discount = discountPercent;
-		this.total = this.total * (1 - discountPercent / 100);
+	applyDiscount(discountPercent: number) {
+		if (!isNaN(discountPercent)) {
+			this.discount = discountPercent;
+			this.total = this.total * (1 - discountPercent / 100);
+		} else {
+			alert('Não é um numero: ' + discountPercent);
+		}
 	}
 
-	public calculateTotal() {
+	calculateTotal() {
 		this.calculateSubTotal();
 		this.applyDiscount(this.discount);
+		return this.total;
 	}
 }

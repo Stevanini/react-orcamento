@@ -1,7 +1,6 @@
 import { Client } from "../Client";
 import { ProductBudget } from "../ProductBudget";
 
-
 export class BudgetDTO {
 	constructor(
 		public startDate: Date,

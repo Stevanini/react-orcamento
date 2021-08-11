@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Button, Form, Input, Modal } from "antd";
 
-import { BudgetContextType, BudgetsContext } from "../../contexts";
+import { ClientContextType, ClientsContext } from "../../contexts";
 import { Client, ClientDTO } from "../../models";
 
 interface AddClientForm {
@@ -21,7 +21,7 @@ interface CreateClientProps {
 const CreateClient: React.FC<CreateClientProps> = ({ clientId, isModalVisible, setIsModalVisible }) => {
 	const [form] = Form.useForm();
 
-	const { clients, editClient, addClient } = useContext<BudgetContextType>(BudgetsContext);
+	const { clients, editClient, addClient } = useContext<ClientContextType>(ClientsContext);
 
 	useEffect(() => {
 		form.setFieldsValue({

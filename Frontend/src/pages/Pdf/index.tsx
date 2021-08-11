@@ -29,16 +29,14 @@ const Pdf = () => {
 	useEffect(() => {
 		const lsBudget = budgets.find(p => p.id === budgetId);
 		if (lsBudget) {
-			setBudget(new Budget(
+			const b = new Budget(
 				lsBudget.id,
-				lsBudget.startDate,
 				lsBudget.endDate,
 				lsBudget.client,
 				lsBudget.products,
-				lsBudget.notes,
-				lsBudget.discount,
-				lsBudget.total,
-			));
+				lsBudget.notes
+			)
+			setBudget(b);
 		}
 	}, [budgetId]);
 
@@ -138,7 +136,7 @@ const Pdf = () => {
 										<td className="t2-col">{p.title}</td>
 										<td className="t2-col p-center w-100px">{p.quantity}</td>
 										<td className="t2-col p-center w-100px">R$ {p.salePrice || 0}</td>
-										<td className="t2-col p-center w-100px">R$ {/*p.calculateSubTotal()*/ 0}</td>
+										{/* <td className="t2-col p-center w-100px">R$ {p.calculateSubTotal()}</td> */}
 									</tr>
 								))
 							}
@@ -153,7 +151,7 @@ const Pdf = () => {
 										<p className="p9 ft6">Subtotal</p>
 									</th>
 									<th className="t3-header ">
-										<p className="p9 ft1 p-right">R$ {/*budget.calculateSubTotal()*/0}</p>
+										<p className="p9 ft1 p-right">R$ {budget.calculateSubTotal()}</p>
 									</th>
 								</tr>
 							</thead>
@@ -173,7 +171,7 @@ const Pdf = () => {
 										<p className="p9 ft6">TOTAL</p>
 									</td>
 									<td className="t3-col">
-										<p className="p9 ft1 p-right">RS {/*budget.calculateTotal()*/0}</p>
+										<p className="p9 ft1 p-right">RS {budget.calculateTotal()}</p>
 									</td>
 								</tr>
 							</tbody>

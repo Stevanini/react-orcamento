@@ -1,7 +1,8 @@
 import { Guid } from 'guid-ts';
 import React, { createContext, useEffect, useState } from 'react'
+import { Config } from '../../configs';
 import { Product, ProductDTO } from '../../models';
-import { getProducts, saveProducts } from '../../services/ProductsService';
+import { getFromStorage, saveToStorage } from '../../services/localStorageService';
 import { ProductContextType } from './ProductContextType';
 
 export const ProductsContext = createContext<ProductContextType>({
@@ -14,10 +15,29 @@ export const ProductsContext = createContext<ProductContextType>({
 
 const ProductsProvider = (props: any) => {
 
-	const [products, setProducts] = useState<Product[]>(getProducts);
+	function prepareValues() {
+		const products = getFromStorage<Product[]>(Config.PRODUCT_STORE) || [];
+		const temp = [] as Product[];
+		if (products) {
+			products.forEach((product: Product) => {
+				temp.push(new Product(
+					product.id,
+					product.title,
+					product.description,
+					product.providerPrice,
+					product.salePrice,
+					product.discount
+				));
+			});
+		}
+		return temp;
+	}
+
+
+	const [products, setProducts] = useState<Product[]>(prepareValues());
 
 	useEffect(() => {
-		saveProducts(products);
+		saveToStorage(Config.PRODUCT_STORE, products);
 	}, [products])
 
 	const addProduct = (dto: ProductDTO) => {
@@ -27,8 +47,7 @@ const ProductsProvider = (props: any) => {
 			dto.description,
 			dto.providerPrice,
 			dto.salePrice,
-			dto.discount,
-			true
+			dto.discount
 		);
 
 		setProducts([...products, product]);

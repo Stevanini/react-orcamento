@@ -1,5 +1,12 @@
 const BASE_URL = '/react-orcamento';
 
+const PRODUCT_STORE = 'PRODUCT_STORE';
+const BUDGET_STORE = 'BUDGET_STORE';
+const CLIENT_STORE = 'CLIENT_STORE';
+
 export default {
-	BASE_URL
+	BASE_URL,
+	PRODUCT_STORE,
+	BUDGET_STORE,
+	CLIENT_STORE,
 }

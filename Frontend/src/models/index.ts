@@ -6,3 +6,4 @@ export { ClientDTO } from "./DTOs/ClientDTO";
 export { Budget } from "./Budget";
 export { BudgetDTO } from "./DTOs/BudgetDTO";
 export { ProductBudget } from "./ProductBudget";
+export { ProductBudgetDTO } from "./DTOs/ProductBudgetDTO";

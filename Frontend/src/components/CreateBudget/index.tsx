@@ -5,7 +5,7 @@ import {
 	ExclamationCircleOutlined,
 } from '@ant-design/icons';
 
-import { BudgetContextType, BudgetsContext, ProductContextType, ProductsContext } from "../../contexts";
+import { BudgetContextType, BudgetsContext, ClientContextType, ClientsContext, ProductContextType, ProductsContext } from "../../contexts";
 import { Budget, BudgetDTO, Client, ProductBudget } from "../../models";
 import TextArea from "antd/lib/input/TextArea";
 
@@ -33,7 +33,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 
 	const { products } = useContext<ProductContextType>(ProductsContext);
 	const { budgets, editBudget, addBudget } = useContext<BudgetContextType>(BudgetsContext);
-	const { clients } = useContext<BudgetContextType>(BudgetsContext);
+	const { clients } = useContext<ClientContextType>(ClientsContext);
 
 	const [productBudget, setProductBudget] = useState<ProductBudget>({} as ProductBudget);
 	const [listProductsBudget, setListProductsBudget] = useState<ProductBudget[]>([])
@@ -42,20 +42,10 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 
 	useEffect(() => {
 		clearFormModal();
-		form.setFieldsValue({
-			id: "",
-			client: {} as Client,
-			discount: 0,
-			endDate: new Date(),
-			startDate: new Date(),
-			notes: "",
-			products: [] as ProductBudget[],
-			total: 0,
-		} as Budget);
 
-		const budg = budgets.find(c => c.id === budgetId) || {} as Budget;
-		if (budgetId && budg) {
-			setListProductsBudget(budg.products);
+		const budgetBase = budgets.find(c => c.id === budgetId) || {} as Budget;
+		if (budgetId && budgetBase) {
+			setListProductsBudget(budgetBase.products);
 		}
 
 		form.setFieldsValue(prepareInitialValues());
@@ -76,7 +66,14 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 
 		}
 
-		return {} as AddBudgetForm;
+		return {
+			id: "",
+			clientId: "",
+			discount: 0,
+			startDate: new Date(),
+			endDate: new Date(),
+			notes: ""
+		} as AddBudgetForm;
 	}
 
 	const onFinish = (data: AddBudgetForm): void => {
@@ -132,7 +129,15 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 		},
 		{
 			title: 'Desconto',
-			dataIndex: 'discount',
+			render: (_: any, record: ProductBudget) => (
+				<span>{record.discount}%</span>
+			)
+		},
+		{
+			title: 'SubTotal',
+			render: (_: any, record: ProductBudget) => (
+				<span>R$ {record.calculateSubTotal()}</span>
+			)
 		},
 		{
 			title: 'Ações',
@@ -156,15 +161,17 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 		const product = products.find(p => p.id === value);
 
 		if (product) {
-			const productBudget = {
-				id: product.id,
-				title: product.title,
-				description: product.description,
-				quantity: 1,
-				discount: 0,
-			} as ProductBudget;
+			const newProductBudget = new ProductBudget(
+				product.id,
+				product.title,
+				product.description,
+				product.providerPrice,
+				product.salePrice,
+				0,
+				1,
+			)
 
-			setProductBudget(productBudget);
+			setProductBudget(newProductBudget);
 		}
 	}
 
@@ -172,16 +179,40 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 		const quantity = Number(productBudget?.quantity) || 0;
 		const discount = Number(productBudget?.discount) || 0;
 
-		const idxProductOnTable = listProductsBudget.findIndex(p => p.id === productBudget.id);
+		var tempPb = [] as ProductBudget[];
+
+		listProductsBudget.forEach(pb => {
+			tempPb.push(
+				new ProductBudget(
+					pb.id,
+					pb.title,
+					pb.description,
+					pb.providerPrice,
+					pb.salePrice,
+					pb.discount,
+					pb.quantity
+				)
+			);
+		});
+
+		const idxProductOnTable = tempPb.findIndex(p => p.id === productBudget.id);
 
 		if (idxProductOnTable !== -1) {
-			listProductsBudget[idxProductOnTable].quantity += quantity;
-			listProductsBudget[idxProductOnTable].discount += discount;
-			setListProductsBudget([...listProductsBudget]);
+			tempPb[idxProductOnTable].quantity += quantity;
+			tempPb[idxProductOnTable].discount += discount;
 		} else {
-			setListProductsBudget([...listProductsBudget, productBudget]);
+			tempPb.push(new ProductBudget(
+				productBudget.id,
+				productBudget.title,
+				productBudget.description,
+				productBudget.providerPrice,
+				productBudget.salePrice,
+				productBudget.discount,
+				productBudget.quantity
+			));
 		}
 
+		setListProductsBudget([...tempPb]);
 		setProductBudget({} as ProductBudget);
 	}
 
@@ -274,7 +305,8 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 							max={100}
 							value={productBudget.discount}
 							onChange={(value: number) => {
-								setProductBudget({ ...productBudget, discount: value } as ProductBudget);
+								productBudget.applyDiscount(value);
+								setProductBudget({ ...productBudget } as ProductBudget);
 							}}
 						/>
 						<Button type="primary" onClick={handleAddProductBudget}>Adicionar</Button>

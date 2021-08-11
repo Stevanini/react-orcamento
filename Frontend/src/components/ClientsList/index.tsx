@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 
 import { Client } from "../../models";
-import { BudgetContextType, BudgetsContext } from "../../contexts";
+import { ClientContextType, ClientsContext } from "../../contexts";
 
 interface ClientListProps {
 	setClientId: (id: string) => void;
@@ -17,9 +17,9 @@ const { confirm } = Modal;
 
 const ClientsList: React.FC<ClientListProps> = (props) => {
 	const { setClientId } = props;
-	const { clients, removeClient } = useContext<BudgetContextType>(BudgetsContext);
+	const { clients, removeClient } = useContext<ClientContextType>(ClientsContext);
 
-	const onRemove = (budget: Client) => {
+	const onRemove = (client: Client) => {
 		confirm({
 			title: `Tem ceteza que você quer remover esse cliente?`,
 			icon: <ExclamationCircleOutlined />,
@@ -28,14 +28,14 @@ const ClientsList: React.FC<ClientListProps> = (props) => {
 			okType: 'danger',
 			cancelText: 'Não',
 			onOk() {
-				removeClient(budget.id);
+				removeClient(client.id);
 			},
 			onCancel() { }
 		});
 	};
 
-	const onEdit = (budgetId: string) => {
-		setClientId(budgetId);
+	const onEdit = (clientId: string) => {
+		setClientId(clientId);
 	};
 
 	const columns = [

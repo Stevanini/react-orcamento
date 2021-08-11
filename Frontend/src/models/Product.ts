@@ -1,17 +1,31 @@
+import IProduct from '../interfaces/IProduct';
 import { ProductDTO } from './DTOs/ProductDTO';
-interface IProduct {
-	toDTO: () => ProductDTO;
-}
+
 export class Product implements IProduct {
-	constructor(
-		public id: string,
-		public title: string,
-		public description: string,
-		public providerPrice: number,
-		public salePrice: number,
-		public discount: number,
-		public active: boolean
-	) { }
+	id: string;
+	title: string;
+	description: string;
+	providerPrice: number;
+	salePrice: number;
+	discount: number;
+	active: boolean;
+
+	constructor(id: string,
+		title: string,
+		description: string,
+		providerPrice: number,
+		salePrice: number,
+		discount: number) {
+		Object.setPrototypeOf(this, Product.prototype);
+
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.providerPrice = providerPrice;
+		this.salePrice = salePrice;
+		this.discount = discount;
+		this.active = true;
+	}
 
 	toDTO() {
 		return {
