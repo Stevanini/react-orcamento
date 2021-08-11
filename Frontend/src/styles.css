@@ -9,11 +9,3 @@
 .trigger:hover {
 	color: #1890ff;
 }
-
-.site-layout {
-	height: 100vh;
-}
-
-.site-layout .site-layout-background {
-	background: #fff;
-}

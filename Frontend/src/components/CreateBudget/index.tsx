@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Button, DatePicker, Form, Input, InputNumber, Modal, Select, Space, Table } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Form, InputNumber, Modal, Select, Space, Table } from "antd";
 import {
 	DeleteOutlined,
 	ExclamationCircleOutlined,
@@ -8,7 +8,6 @@ import {
 import { BudgetContextType, BudgetsContext, ProductContextType, ProductsContext } from "../../contexts";
 import { Budget, BudgetDTO, Client, ProductBudget } from "../../models";
 import TextArea from "antd/lib/input/TextArea";
-
 
 interface AddBudgetForm {
 	id: string;
@@ -21,25 +20,20 @@ interface AddBudgetForm {
 	total: number;
 }
 
-
 interface CreateBudgetProps {
 	budgetId?: string;
 	isModalVisible: boolean;
 	setIsModalVisible: (visible: boolean) => void;
 }
 
-// const moment = require("moment");
-
 const { Option } = Select;
 const { confirm } = Modal;
-
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
 const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, setIsModalVisible }) => {
 
 	const { products } = useContext<ProductContextType>(ProductsContext);
 	const { budgets, editBudget, addBudget } = useContext<BudgetContextType>(BudgetsContext);
-	const { clients, addClient } = useContext<BudgetContextType>(BudgetsContext);
+	const { clients } = useContext<BudgetContextType>(BudgetsContext);
 
 	const [productBudget, setProductBudget] = useState<ProductBudget>({} as ProductBudget);
 	const [listProductsBudget, setListProductsBudget] = useState<ProductBudget[]>([])

@@ -44,7 +44,7 @@ const BudgetsList: React.FC<BudgetListProps> = (props) => {
 	};
 
 	const onSendPdf = (budgetId: string) => {
-		history.push(`${Config.BASE_URL}/budgets/pdf/budgetId=${budgetId}`);
+		history.push(`${Config.BASE_URL}/budgets/pdf/${budgetId}`);
 	};
 
 	const columns = [
