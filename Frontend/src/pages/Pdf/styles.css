@@ -12,8 +12,27 @@
 }
 
 @font-face {
-	font-family: "DejaVu Sans";
-	src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans.ttf") format("truetype");
+    font-family: "DejaVu Sans";
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "DejaVu Sans";
+    font-weight: bold;
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "DejaVu Sans";
+    font-style: italic;
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "DejaVu Sans";
+    font-weight: bold;
+    font-style: italic;
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf") format("truetype");
 }
 
 .mt-30 {
@@ -75,7 +94,9 @@
 	text-align: left;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	font: bold 22px 'Arial';
+	font-family: "DejaVu Sans";
+	font-size:22px;
+	font-weight: bold;
 	color: #555555;
 	line-height: 16px;
 }
@@ -84,21 +105,26 @@
 	text-align: left;
 	margin-top: 10px;
 	margin-bottom: 0px;
-	font: 12px 'Arial';
+	font-family: "DejaVu Sans";
+	font-size:12px;
 	color: #555555;
 	line-height: 9px;
 }
 
 .p3 {
 	text-align: left;
-	font: bold 12px 'Arial';
+	font-family: "DejaVu Sans";
+	font-size:12px;
+	font-weight: bold;
 	color: #222222;
 	line-height: 9px;
 }
 
 .p8 {
 	text-align: right;
-	font: bold 40px 'Arial';
+	font-family: "DejaVu Sans";
+	font-size:40px;
+	font-weight: bold;
 	color: #555555;
 }
 
@@ -110,13 +136,16 @@
 }
 
 .ft6 {
-	font: bold 12px 'Arial';
+	font-family: "DejaVu Sans";
+	font-size:12px;
+	font-weight: bold;
 	color: #555555;
 	line-height: 9px;
 }
 
 .ft1 {
-	font: 12px 'Arial';
+	font-family: "DejaVu Sans";
+	font-size:12px;
 	color: #555555;
 	line-height: 9px;
 }

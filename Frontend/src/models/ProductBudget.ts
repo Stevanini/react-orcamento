@@ -12,14 +12,15 @@ export class ProductBudget implements IProductBudget {
 	active: boolean;
 	total: number;
 
-	constructor(id: string,
+	constructor(
+		id: string,
 		title: string,
 		description: string,
 		providerPrice: number,
 		salePrice: number,
 		discount: number,
-		quantity: number) {
-
+		quantity: number
+	) {
 		Object.setPrototypeOf(this, ProductBudget.prototype);
 		// Object.setPrototypeOf(this, new.target.prototype);
 
@@ -38,10 +39,10 @@ export class ProductBudget implements IProductBudget {
 	}
 
 	calculateSubTotal(): number {
-		this.total = (this.salePrice * this.quantity);
+		this.total = this.salePrice * this.quantity;
 		this.applyDiscount(this.discount);
 		return this.total;
-	};
+	}
 
 	applyDiscount(discountPercent: number) {
 		this.discount = discountPercent;
@@ -56,7 +57,7 @@ export class ProductBudget implements IProductBudget {
 			salePrice: this.salePrice,
 			discount: this.discount,
 			active: this.active,
-			quantity: this.quantity
-		} as ProductBudgetDTO
+			quantity: this.quantity,
+		} as ProductBudgetDTO;
 	}
 }

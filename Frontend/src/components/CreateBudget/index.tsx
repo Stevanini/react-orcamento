@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, InputNumber, Modal, Select, Space, Table } from "antd";
-import {
-	DeleteOutlined,
-	ExclamationCircleOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
-import { BudgetContextType, BudgetsContext, ClientContextType, ClientsContext, ProductContextType, ProductsContext } from "../../contexts";
+import {
+	BudgetContextType,
+	BudgetsContext,
+	ClientContextType,
+	ClientsContext,
+	ProductContextType,
+	ProductsContext,
+} from "../../contexts";
 import { Budget, BudgetDTO, Client, ProductBudget } from "../../models";
 import TextArea from "antd/lib/input/TextArea";
 
@@ -29,21 +33,30 @@ interface CreateBudgetProps {
 const { Option } = Select;
 const { confirm } = Modal;
 
-const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, setIsModalVisible }) => {
-
+const CreateBudget: React.FC<CreateBudgetProps> = ({
+	budgetId,
+	isModalVisible,
+	setIsModalVisible,
+}) => {
 	const { products } = useContext<ProductContextType>(ProductsContext);
-	const { budgets, editBudget, addBudget } = useContext<BudgetContextType>(BudgetsContext);
+	const { budgets, editBudget, addBudget } =
+		useContext<BudgetContextType>(BudgetsContext);
 	const { clients } = useContext<ClientContextType>(ClientsContext);
 
-	const [productBudget, setProductBudget] = useState<ProductBudget>({} as ProductBudget);
-	const [listProductsBudget, setListProductsBudget] = useState<ProductBudget[]>([])
+	const [productBudget, setProductBudget] = useState<ProductBudget>(
+		{} as ProductBudget
+	);
+	const [listProductsBudget, setListProductsBudget] = useState<
+		ProductBudget[]
+	>([]);
 
 	const [form] = Form.useForm();
 
 	useEffect(() => {
 		clearFormModal();
 
-		const budgetBase = budgets.find(c => c.id === budgetId) || {} as Budget;
+		const budgetBase =
+			budgets.find((c) => c.id === budgetId) || ({} as Budget);
 		if (budgetId && budgetBase) {
 			setListProductsBudget(budgetBase.products);
 		}
@@ -52,7 +65,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 	}, [budgetId, isModalVisible]);
 
 	const prepareInitialValues = (): AddBudgetForm => {
-		const budgetBase = budgets.find(p => p.id === budgetId);
+		const budgetBase = budgets.find((p) => p.id === budgetId);
 
 		if (budgetBase) {
 			return {
@@ -61,9 +74,8 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 				discount: budgetBase.discount,
 				endDate: budgetBase.endDate,
 				startDate: budgetBase.startDate,
-				notes: budgetBase.notes
+				notes: budgetBase.notes,
 			} as AddBudgetForm;
-
 		}
 
 		return {
@@ -72,13 +84,13 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 			discount: 0,
 			startDate: new Date(),
 			endDate: new Date(),
-			notes: ""
+			notes: "",
 		} as AddBudgetForm;
-	}
+	};
 
 	const onFinish = (data: AddBudgetForm): void => {
-
-		const client = clients.find(c => c.id === data.clientId) || {} as Client;
+		const client =
+			clients.find((c) => c.id === data.clientId) || ({} as Client);
 
 		const newBudget: BudgetDTO = {
 			discount: data.discount,
@@ -89,7 +101,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 			client: client,
 			startDate: new Date(),
 			products: listProductsBudget,
-		}
+		};
 
 		if (budgetId) {
 			editBudget(budgetId, newBudget);
@@ -99,7 +111,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 
 		clearFormModal();
 		setIsModalVisible(false);
-	}
+	};
 
 	//#region Table ProdcutsBudgets
 
@@ -107,41 +119,43 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 		confirm({
 			title: `Tem ceteza que você quer remover esse produto?`,
 			icon: <ExclamationCircleOutlined />,
-			okText: 'Sim',
-			okType: 'danger',
-			cancelText: 'Não',
+			okText: "Sim",
+			okType: "danger",
+			cancelText: "Não",
 			onOk() {
-				const result = listProductsBudget.filter(p => p.id !== productId);
+				const result = listProductsBudget.filter(
+					(p) => p.id !== productId
+				);
 				setListProductsBudget(result);
 			},
-			onCancel() { }
+			onCancel() {},
 		});
-	}
+	};
 
 	const columns = [
 		{
-			title: 'Nome',
-			dataIndex: 'title',
+			title: "Nome",
+			dataIndex: "title",
 		},
 		{
-			title: 'Quantidade',
-			dataIndex: 'quantity',
+			title: "Quantidade",
+			dataIndex: "quantity",
 		},
 		{
-			title: 'Desconto',
+			title: "Desconto",
 			render: (_: any, record: ProductBudget) => (
 				<span>{record.discount}%</span>
-			)
+			),
 		},
 		{
-			title: 'SubTotal',
+			title: "SubTotal",
 			render: (_: any, record: ProductBudget) => (
 				<span>R$ {record.calculateSubTotal()}</span>
-			)
+			),
 		},
 		{
-			title: 'Ações',
-			key: 'action',
+			title: "Ações",
+			key: "action",
 			render: (_: any, record: ProductBudget) => (
 				<Space size="middle">
 					<Button
@@ -150,15 +164,15 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 						icon={<DeleteOutlined />}
 						size="middle"
 						danger
-						onClick={() => onRemoveProductBudget(record.id)} />
+						onClick={() => onRemoveProductBudget(record.id)}
+					/>
 				</Space>
-			)
-		}
+			),
+		},
 	];
 
 	const onChangeSelectProduct = (value: string): void => {
-
-		const product = products.find(p => p.id === value);
+		const product = products.find((p) => p.id === value);
 
 		if (product) {
 			const newProductBudget = new ProductBudget(
@@ -168,12 +182,12 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 				product.providerPrice,
 				product.salePrice,
 				0,
-				1,
-			)
+				1
+			);
 
 			setProductBudget(newProductBudget);
 		}
-	}
+	};
 
 	const handleAddProductBudget = () => {
 		const quantity = Number(productBudget?.quantity) || 0;
@@ -181,7 +195,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 
 		var tempPb = [] as ProductBudget[];
 
-		listProductsBudget.forEach(pb => {
+		listProductsBudget.forEach((pb) => {
 			tempPb.push(
 				new ProductBudget(
 					pb.id,
@@ -195,26 +209,30 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 			);
 		});
 
-		const idxProductOnTable = tempPb.findIndex(p => p.id === productBudget.id);
+		const idxProductOnTable = tempPb.findIndex(
+			(p) => p.id === productBudget.id
+		);
 
 		if (idxProductOnTable !== -1) {
 			tempPb[idxProductOnTable].quantity += quantity;
 			tempPb[idxProductOnTable].discount += discount;
 		} else {
-			tempPb.push(new ProductBudget(
-				productBudget.id,
-				productBudget.title,
-				productBudget.description,
-				productBudget.providerPrice,
-				productBudget.salePrice,
-				productBudget.discount,
-				productBudget.quantity
-			));
+			tempPb.push(
+				new ProductBudget(
+					productBudget.id,
+					productBudget.title,
+					productBudget.description,
+					productBudget.providerPrice,
+					productBudget.salePrice,
+					productBudget.discount,
+					productBudget.quantity
+				)
+			);
 		}
 
 		setListProductsBudget([...tempPb]);
 		setProductBudget({} as ProductBudget);
-	}
+	};
 
 	//#endregion
 
@@ -222,7 +240,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 		form.resetFields();
 		setProductBudget({} as ProductBudget);
 		setListProductsBudget([] as ProductBudget[]);
-	}
+	};
 
 	return (
 		<>
@@ -243,32 +261,27 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 					onFinish={onFinish}
 					initialValues={prepareInitialValues()}
 				>
-
-					<Form.Item
-						label="Adicionar cliente"
-						name="clientId"
-					>
+					<Form.Item label="Adicionar cliente" name="clientId">
 						<Select
 							showSearch
 							placeholder="Selecione o cliente"
 							optionFilterProp="children"
 						>
-							{
-								clients.map(c => (
-									<Option
-										// selec={c.id === (budget.client && budget.client.id)}
-										key={c.id}
-										value={c.id}>
-										{c.name} - {c.email}
-									</Option>
-								))
-							}
+							{clients.map((c) => (
+								<Option
+									// selec={c.id === (budget.client && budget.client.id)}
+									key={c.id}
+									value={c.id}
+								>
+									{c.name} - {c.email}
+								</Option>
+							))}
 						</Select>
 					</Form.Item>
 
 					<label>Adicionar Produtos</label>
 					<Space
-						direction='horizontal'
+						direction="horizontal"
 						size={16}
 						style={{ marginBottom: 16 }}
 					>
@@ -281,11 +294,11 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 							value={productBudget?.id ?? ""}
 							onChange={onChangeSelectProduct}
 						>
-							{
-								products.map(c => (
-									<Option key={c.id} value={c.id}>{c.title}</Option>
-								))
-							}
+							{products.map((c) => (
+								<Option key={c.id} value={c.id}>
+									{c.title}
+								</Option>
+							))}
 						</Select>
 
 						<span>Quantidade: </span>
@@ -294,7 +307,10 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 							min={1}
 							value={productBudget.quantity}
 							onChange={(value: number) => {
-								setProductBudget({ ...productBudget, quantity: value } as ProductBudget);
+								setProductBudget({
+									...productBudget,
+									quantity: value,
+								} as ProductBudget);
 							}}
 						/>
 
@@ -305,19 +321,18 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 							max={100}
 							value={productBudget.discount}
 							onChange={(value: number) => {
-								productBudget.applyDiscount(value);
-								setProductBudget({ ...productBudget } as ProductBudget);
+								productBudget?.applyDiscount(value);
+								setProductBudget({
+									...productBudget,
+								} as ProductBudget);
 							}}
 						/>
-						<Button type="primary" onClick={handleAddProductBudget}>Adicionar</Button>
+						<Button type="primary" onClick={handleAddProductBudget}>
+							Adicionar
+						</Button>
 					</Space>
 
-					<Table
-						columns={columns}
-						dataSource={listProductsBudget}
-					/>
-
-
+					<Table columns={columns} dataSource={listProductsBudget} />
 
 					{/* <Form.Item
 						name="endDate"
@@ -325,10 +340,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 						<DatePicker />
 					</Form.Item> */}
 
-					<Form.Item
-						label="Observações/Anotações"
-						name="notes"
-					>
+					<Form.Item label="Observações/Anotações" name="notes">
 						<TextArea />
 					</Form.Item>
 
@@ -340,7 +352,7 @@ const CreateBudget: React.FC<CreateBudgetProps> = ({ budgetId, isModalVisible, s
 				</Form>
 			</Modal>
 		</>
-	)
+	);
 };
 
 export default CreateBudget;
