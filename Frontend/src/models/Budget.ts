@@ -11,6 +11,7 @@ export class Budget implements IBudget {
 	notes: string;
 	discount = 0;;
 	total = 0;
+	subTotal = 0;
 
 	constructor(
 		id: string,
@@ -20,6 +21,7 @@ export class Budget implements IBudget {
 		notes: string) {
 
 		Object.setPrototypeOf(this, Budget.prototype);
+		Object.setPrototypeOf(this, new.target.prototype);
 
 		this.id = id;
 		this.startDate = new Date();
@@ -29,6 +31,8 @@ export class Budget implements IBudget {
 		this.notes = notes;
 		this.discount = 0;
 
+		// this.applyDiscount(5);
+		this.calculateSubTotal();
 		this.calculateTotal();
 	}
 
@@ -37,17 +41,16 @@ export class Budget implements IBudget {
 		this.products.forEach(function (p: ProductBudget) {
 			calculate += p.total;
 		});
-		this.total = calculate;
-		return this.total;
+		this.subTotal = this.total = calculate;
+		return this.subTotal;
 	}
 
 	applyDiscount(discountPercent: number) {
-		if (!isNaN(discountPercent)) {
-			this.discount = discountPercent;
-			this.total = this.total * (1 - discountPercent / 100);
-		} else {
-			alert('Não é um numero: ' + discountPercent);
+		if (isNaN(discountPercent)) {
+			discountPercent = 0;
 		}
+		this.discount = discountPercent;
+		this.total = this.total * (1 - discountPercent / 100);
 	}
 
 	calculateTotal() {

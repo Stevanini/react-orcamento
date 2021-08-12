@@ -136,7 +136,7 @@ const Pdf = () => {
 										<td className="t2-col">{p.title}</td>
 										<td className="t2-col p-center w-100px">{p.quantity}</td>
 										<td className="t2-col p-center w-100px">R$ {p.salePrice || 0}</td>
-										{/* <td className="t2-col p-center w-100px">R$ {p.calculateSubTotal()}</td> */}
+										<td className="t2-col p-center w-100px">R$ {p.total || 0}</td>
 									</tr>
 								))
 							}
@@ -151,12 +151,12 @@ const Pdf = () => {
 										<p className="p9 ft6">Subtotal</p>
 									</th>
 									<th className="t3-header ">
-										<p className="p9 ft1 p-right">R$ {budget.calculateSubTotal()}</p>
+										<p className="p9 ft1 p-right">R$ {budget.subTotal}</p>
 									</th>
 								</tr>
 							</thead>
 							<tbody>
-								{budget?.discount && (
+								{budget?.discount ? (
 									<tr>
 										<td className="t3-col">
 											<p className="p9 ft6">Descontos(%)</p>
@@ -165,13 +165,13 @@ const Pdf = () => {
 											<p className="p9 ft1 p-right">{budget?.discount} %</p>
 										</td>
 									</tr>
-								)}
+								) : <tr></tr>}
 								<tr className="t3-footer">
 									<td className="t3-col">
 										<p className="p9 ft6">TOTAL</p>
 									</td>
 									<td className="t3-col">
-										<p className="p9 ft1 p-right">RS {budget.calculateTotal()}</p>
+										<p className="p9 ft1 p-right">RS {budget.total}</p>
 									</td>
 								</tr>
 							</tbody>
