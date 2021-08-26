@@ -5,8 +5,6 @@ import { Navbar } from "./components";
 import { BudgetsProvider, ClientsProvider, ProductsProvider } from "./contexts";
 import Routes from "./routes";
 
-import "./styles.css";
-
 import { Layout } from 'antd';
 import {
 	MenuUnfoldOutlined,
@@ -24,9 +22,9 @@ function App() {
 				<BudgetsProvider>
 					<ProductsProvider>
 
-						<Layout>
+						<Layout style={{ minHeight: '100vh' }}>
 							<Navbar collapse={collapse} />
-							<Layout style={{ minHeight: '100vh' }}>
+							<Layout>
 								<Header style={{ padding: 0, background: "#fff" }}>
 									{React.createElement(collapse ? MenuUnfoldOutlined : MenuFoldOutlined, {
 										className: 'trigger',

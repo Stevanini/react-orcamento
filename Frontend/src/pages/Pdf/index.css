@@ -1,38 +1,48 @@
-#body-pdf {
-	padding: 0px;
-	font-family: "DejaVu Sans", sans-serif;
-	font-size: 12px;
+/* @font-face {
+	font-family: "DejaVu Sans";
+	src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans.ttf") format("truetype");
 }
 
-.container-pdf {
-	padding: 30px;
+@font-face {
+	font-family: "DejaVu Sans";
+	font-weight: bold;
+	src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Bold.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "DejaVu Sans";
+	font-style: italic;
+	src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "DejaVu Sans";
+	font-weight: bold;
+	font-style: italic;
+	src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf") format("truetype");
+} */
+
+
+.render-pdf {
 	border: 1px solid #ddd;
-	margin: 50px 100px;
-	min-width: 550px;
+	font-family: Segoe UI,Optima,Arial,sans-serif; ;
+	font-size: 11px;
 }
 
-@font-face {
-    font-family: "DejaVu Sans";
-    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans.ttf") format("truetype");
+#body-pdf {
+	width: 100%;
+	word-wrap: break-word;
 }
 
-@font-face {
-    font-family: "DejaVu Sans";
-    font-weight: bold;
-    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Bold.ttf") format("truetype");
+.header-pdf {
+	display: flex;
+	flex-direction: row;
+	padding: 10px;
 }
 
-@font-face {
-    font-family: "DejaVu Sans";
-    font-style: italic;
-    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf") format("truetype");
-}
-
-@font-face {
-    font-family: "DejaVu Sans";
-    font-weight: bold;
-    font-style: italic;
-    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf") format("truetype");
+.company-info-pdf {
+	flex: 1;
+	text-align: start;
 }
 
 .mt-30 {
@@ -59,32 +69,30 @@
 	width: 100px !important;
 }
 
-.t0 {
+/* table, tr, th, td {
+	border: 1px solid red !important;
+} */
+
+.t1 {
 	width: 100%;
 	border-collapse: collapse
 }
 
-.t0 td {
-	font-size: 12px;
-	overflow: hidden;
+.t1 td {
 	padding: 5px;
-	word-break: normal;
 }
 
-.t0 th {
-	font-size: 12px;
+.t1 th {
 	font-weight: normal;
-	overflow: hidden;
 	padding: 10px 5px;
-	word-break: normal;
 }
 
-.t0 .t0-col {
+.t1 .t1-col {
 	text-align: left;
 	vertical-align: top
 }
 
-.t0 .t0-br {
+.t1 .t1-br {
 	text-align: right;
 	text-align: -webkit-right;
 	vertical-align: bottom
@@ -94,8 +102,7 @@
 	text-align: left;
 	margin-top: 0px;
 	margin-bottom: 0px;
-	font-family: "DejaVu Sans";
-	font-size:22px;
+	font-size: 22px;
 	font-weight: bold;
 	color: #555555;
 	line-height: 16px;
@@ -105,27 +112,22 @@
 	text-align: left;
 	margin-top: 10px;
 	margin-bottom: 0px;
-	font-family: "DejaVu Sans";
-	font-size:12px;
 	color: #555555;
 	line-height: 9px;
 }
 
 .p3 {
 	text-align: left;
-	font-family: "DejaVu Sans";
-	font-size:12px;
 	font-weight: bold;
 	color: #222222;
 	line-height: 9px;
 }
 
 .p8 {
-	text-align: right;
-	font-family: "DejaVu Sans";
-	font-size:40px;
+	font-size: 40px;
 	font-weight: bold;
-	color: #555555;
+	color: #333;
+	line-height-step: 1;
 }
 
 .p9 {
@@ -136,18 +138,13 @@
 }
 
 .ft6 {
-	font-family: "DejaVu Sans";
-	font-size:12px;
 	font-weight: bold;
 	color: #555555;
-	line-height: 9px;
+	font-weight: bold;
 }
 
 .ft1 {
-	font-family: "DejaVu Sans";
-	font-size:12px;
 	color: #555555;
-	line-height: 9px;
 }
 
 .td0 {
@@ -165,7 +162,7 @@
 .t2 {
 	width: 100%;
 	margin-top: 60px;
-	border-collapse: collapse;
+	/* border-collapse: collapse; */
 }
 
 .t2 thead {
@@ -176,19 +173,13 @@
 }
 
 .t2 td {
-	font-size: 12px;
-	overflow: hidden;
 	padding: 10px 5px;
-	word-break: normal;
 	border-bottom: 1px solid #ddd;
 }
 
 .t2 th {
-	font-size: 12px;
 	font-weight: normal;
-	overflow: hidden;
 	padding: 10px 5px;
-	word-break: normal;
 }
 
 .t2 .t2-header {
@@ -208,23 +199,17 @@
 }
 
 .t3 {
-	border-collapse: collapse;
+	/* border-collapse: collapse; */
 	width: 40%;
 }
 
 .t3 td {
-	font-size: 12px;
-	overflow: hidden;
 	padding: 10px;
-	word-break: normal;
 }
 
 .t3 th {
-	font-size: 12px;
 	font-weight: normal;
-	overflow: hidden;
 	padding: 10px;
-	word-break: normal;
 }
 
 .t3 .t3-header {
@@ -243,4 +228,6 @@
 	color: #FFF;
 	font-weight: bold;
 	font-size: 16px;
+	padding: 0;
+	margin: 0;
 }

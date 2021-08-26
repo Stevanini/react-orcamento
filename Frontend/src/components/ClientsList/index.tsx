@@ -8,6 +8,7 @@ import {
 
 import { Client } from "../../models";
 import { ClientContextType, ClientsContext } from "../../contexts";
+import { ColumnsType } from "antd/lib/table";
 
 interface ClientListProps {
 	setClientId: (id: string) => void;
@@ -41,26 +42,31 @@ const ClientsList: React.FC<ClientListProps> = (props) => {
 	const columns = [
 		{
 			title: 'Cliente',
+			breakpoint: ['md'],
 			render: (_: any, record: Client) =>
 				<span>{record.name}</span>,
 		},
 		{
 			title: 'E-mail',
+			breakpoint: ['md'],
 			render: (_: any, record: Client) =>
 				<span>{record.email}</span>,
 		},
 		{
 			title: 'Endereço',
+			breakpoint: ['md'],
 			render: (_: any, record: Client) =>
 				<span>{record.address}</span>,
 		},
 		{
 			title: 'Cidade',
+			breakpoint: ['md'],
 			render: (_: any, record: Client) =>
 				<span>{record.city}</span>,
 		},
 		{
 			title: 'Ações',
+			breakpoint: ['md'],
 			key: 'action',
 			render: (_: any, record: Client) => (
 				<Space size="middle">

@@ -17,7 +17,13 @@ const { Sider } = Layout;
 const Navbar = (props: any) => {
 
 	return (
-		<Sider trigger={null} collapsible collapsed={props.collapse}>
+		<Sider
+			breakpoint="md"
+			collapsedWidth="0"
+			trigger={null}
+			collapsible
+			collapsed={props.collapse}
+		>
 			<Link to={`${Config.BASE_URL}/`}>
 				<h4 className={!props.collapse ? 'logo' : 'logo-collapse'}>Gerenciador de Orçamento</h4>
 			</Link>

@@ -12,12 +12,12 @@ import { Email } from '../models';
 const GenerateBase64Pdf = async (element: HTMLElement, options?: DrawOptions) =>
 	drawDOM(element, {
 		paperSize: "A4",
-		margin: {
-			left: 40,
-			top: 40,
-			right: 40,
-			bottom: 40,
-		}
+		// margin: {
+		// 	left: 40,
+		// 	top: 40,
+		// 	right: 40,
+		// 	bottom: 40,
+		// }
 	})
 		.then((group: Group) => exportPDF(group))
 		.then((dataUri: string) => {
